@@ -1,0 +1,8 @@
+-- first sql migration file
+-- Command to run files:
+--	psql -h {host} -U {username} -d stats -a -f deploy.sql
+
+BEGIN;
+\i scripts/0000.sql
+COMMIT;
+
