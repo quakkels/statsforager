@@ -17,13 +17,13 @@ func (w *wrappedWriter) WriteHeader(statusCode int) {
 }
 
 func Logging(next http.Handler) http.Handler {
-	
-	return http.HandlerFunc(func (w http.ResponseWriter, r *http.Request) {
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 
 		wrapped := &wrappedWriter{
 			ResponseWriter: w,
-			statusCode: http.StatusOK,
+			statusCode:     http.StatusOK,
 		}
 
 		next.ServeHTTP(wrapped, r)

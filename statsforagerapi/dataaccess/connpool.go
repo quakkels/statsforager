@@ -31,7 +31,7 @@ func NewConnPool(ctx context.Context, connString string) (*postgres, error) {
 
 		pgInstance = &postgres{db}
 	})
-	
+
 	return pgInstance, poolError
 }
 

@@ -19,15 +19,14 @@ func main() {
 	)
 
 	connString := fmt.Sprintf("host=%s port=%d user=%s "+
-    "password=%s dbname=%s sslmode=disable",
-    host, port, user, password, dbname)
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
 
 	connPool, err := dataaccess.NewConnPool(context.Background(), connString)
 	if err != nil {
 		panic(err)
 	}
 	defer connPool.Close()
-	
 
 	router := http.NewServeMux()
 	router.HandleFunc("GET /thing/{siteKey}", func(w http.ResponseWriter, r *http.Request) {
