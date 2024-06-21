@@ -4,5 +4,6 @@
 
 BEGIN;
 \i scripts/0000.sql
+\i scripts/0001.sql
 COMMIT;
 
