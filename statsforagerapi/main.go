@@ -6,8 +6,15 @@ import (
 	"net/http"
 
 	"statsforagerapi/dataaccess"
-	"statsforagerapi/middleware"
+	"statsforagerapi/webapi"
+	"statsforagerapi/webapi/middleware"
 )
+
+func MakeHandler() func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("works\n"))
+	}
+}
 
 func main() {
 	const (
@@ -22,20 +29,25 @@ func main() {
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 
-	connPool, err := dataaccess.NewConnPool(context.Background(), connString)
+	statsDataStore, err := dataaccess.NewStatsDataStore(context.Background(), connString)
 	if err != nil {
 		panic(err)
 	}
-	defer connPool.Close()
+	defer statsDataStore.Close()
 
-	router := http.NewServeMux()
-	router.HandleFunc("GET /thing/{siteKey}", func(w http.ResponseWriter, r *http.Request) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /thing/{siteKey}", func(w http.ResponseWriter, r *http.Request) {
 		id := r.PathValue("siteKey")
 		var dbversion string
-		connPool.QueryRow(r.Context(), "SELECT version FROM db_version").Scan(&dbversion)
+		statsDataStore.QueryRow(r.Context(), "SELECT version FROM db_version").Scan(&dbversion)
 		w.Write([]byte("you found me: " + id + "\n\n"))
 		w.Write([]byte("<p>db version: " + dbversion + "</p>\n\n"))
 	})
+	mux.HandleFunc("GET /thing/makething", MakeHandler())
+
+	webapi.RegisterRoutes(
+		mux,
+		statsDataStore)
 
 	middlewareStack := middleware.CreateStack(
 		middleware.Logging,
@@ -43,7 +55,7 @@ func main() {
 
 	server := http.Server{
 		Addr:    ":8000",
-		Handler: middlewareStack(router),
+		Handler: middlewareStack(mux),
 	}
 
 	server.ListenAndServe()

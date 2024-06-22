@@ -9,15 +9,14 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type postgres struct {
+type statsDataStore struct {
 	db *pgxpool.Pool
 }
 
-var pgInstance *postgres
+var pgInstance *statsDataStore
 var pgOnce sync.Once
 
-func NewConnPool(ctx context.Context, connString string) (*postgres, error) {
-
+func NewStatsDataStore(ctx context.Context, connString string) (*statsDataStore, error) {
 	var poolError error = nil
 
 	pgOnce.Do(func() {
@@ -29,16 +28,16 @@ func NewConnPool(ctx context.Context, connString string) (*postgres, error) {
 			fmt.Println("no error when making pool")
 		}
 
-		pgInstance = &postgres{db}
+		pgInstance = &statsDataStore{db}
 	})
 
 	return pgInstance, poolError
 }
 
-func (pg *postgres) Close() {
+func (pg *statsDataStore) Close() {
 	pg.db.Close()
 }
 
-func (pg *postgres) QueryRow(ctx context.Context, sql string) pgx.Row {
+func (pg *statsDataStore) QueryRow(ctx context.Context, sql string) pgx.Row {
 	return pg.db.QueryRow(ctx, sql)
 }
