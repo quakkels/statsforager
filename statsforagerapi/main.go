@@ -10,12 +10,6 @@ import (
 	"statsforagerapi/webapi/middleware"
 )
 
-func MakeHandler() func(http.ResponseWriter, *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("works\n"))
-	}
-}
-
 func main() {
 	const (
 		host     = "localhost"
@@ -36,14 +30,6 @@ func main() {
 	defer statsDataStore.Close()
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("GET /thing/{siteKey}", func(w http.ResponseWriter, r *http.Request) {
-		id := r.PathValue("siteKey")
-		var dbversion string
-		statsDataStore.QueryRow(r.Context(), "SELECT version FROM db_version").Scan(&dbversion)
-		w.Write([]byte("you found me: " + id + "\n\n"))
-		w.Write([]byte("<p>db version: " + dbversion + "</p>\n\n"))
-	})
-	mux.HandleFunc("GET /thing/makething", MakeHandler())
 
 	webapi.RegisterRoutes(
 		mux,
@@ -60,3 +46,4 @@ func main() {
 
 	server.ListenAndServe()
 }
+

@@ -22,4 +22,6 @@ func RegisterRoutes(
 		w.Write([]byte("you found me: " + id + "\n\n"))
 		w.Write([]byte("<p>db version: " + dbversion + "</p>\n\n"))
 	})
+
+	mux.HandleFunc("GET /health", HealthHandler("version0.0.1", statsdatastore))
 }
