@@ -14,6 +14,9 @@ type StatsDataStore interface {
 
 func RegisterRoutes(
 	mux *http.ServeMux,
+	version string,
+	builddate string,
+	hash string,
 	statsdatastore StatsDataStore) {
 	mux.HandleFunc("GET /route/{siteKey}", func(w http.ResponseWriter, r *http.Request) {
 		id := r.PathValue("siteKey")
@@ -23,5 +26,5 @@ func RegisterRoutes(
 		w.Write([]byte("<p>db version: " + dbversion + "</p>\n\n"))
 	})
 
-	mux.HandleFunc("GET /health", HealthHandler("version0.0.1", statsdatastore))
+	mux.HandleFunc("GET /health", HealthHandler(version, builddate, hash, statsdatastore))
 }

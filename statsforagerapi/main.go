@@ -10,6 +10,12 @@ import (
 	"statsforagerapi/webapi/middleware"
 )
 
+var (
+	Version   = "0.0.1"
+	BuildDate = "No Date"
+	Hash      = "No Hash"
+)
+
 func main() {
 	const (
 		host     = "localhost"
@@ -33,6 +39,9 @@ func main() {
 
 	webapi.RegisterRoutes(
 		mux,
+		Version,
+		BuildDate,
+		Hash,
 		statsDataStore)
 
 	middlewareStack := middleware.CreateStack(
@@ -46,4 +55,3 @@ func main() {
 
 	server.ListenAndServe()
 }
-
