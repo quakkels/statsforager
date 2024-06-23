@@ -5,23 +5,23 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- script client collect user data (impressionId, PageLoadDateTime, PageExitDateTime, Referrer, URL, user-agent)
+- api (sitekey, impressionId, IP, user data from client)
 
 ### Needs doing
 
 - script client create session id
 - script client call api
-- api (sitekey, impressionId, IP, user data from client)
 - api noscript gif using site key
 - api endpoint for script client using site key
 - user dashboard
-- choose database
 - choose host provider
 - hosting deploy process
 - hosting deploy server config allowing CORS
 - site ownership verification
 
 ### Done
+- script client collect user data (impressionId, PageLoadDateTime, PageExitDateTime, Referrer, URL, user-agent)
+- choose database
 
 ## Beyond MVP
 
