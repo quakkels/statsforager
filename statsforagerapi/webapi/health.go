@@ -1,8 +1,6 @@
 package webapi
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 )
 
@@ -30,12 +28,6 @@ func HealthHandler(
 			ApiHash:         appHash,
 		}
 
-		fmt.Println(model)
-		result, err := json.Marshal(model)
-		if err != nil {
-			panic(err)
-		}
-
-		w.Write(result)
+		WriteJSON(w, http.StatusOK, model)
 	}
 }
