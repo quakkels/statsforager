@@ -5,7 +5,7 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- hosting deploy process (deploy api to railway)
+- hosting deploy process (deploy api to railway via docker hub)
 - api (save sitekey, impressionId, IP, user data from client)
 
 ### Needs doing
