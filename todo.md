@@ -5,11 +5,11 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- hosting deploy process (deploy api to railway via docker hub)
-- api (save sitekey, impressionId, IP, user data from client)
+- update database to track length of impression
 
 ### Needs doing
 - API connect to database from docker container
+- api (save sitekey, impressionId, IP, user data from client)
 - script client call api
 - api noscript gif using site key
 - api endpoint for script client using site key
@@ -18,6 +18,7 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - site ownership verification
 
 ### Done
+- hosting deploy process (deploy api to railway via docker hub)
 - create and migrate remote database
 - choose host provider (railway)
 - script client create session id

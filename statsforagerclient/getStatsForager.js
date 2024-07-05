@@ -4,12 +4,15 @@ function setupStatsForager(setup) {
 
 		arrive: function() {
 			this.setGuid();
+			let dateUtc = this.getDateUtcNowIso();
 			let impression = {
 				impressionId: impressionId,
 				userAgent: navigator.userAgent,
 				language: navigator.language,
 				location: window.location.href,
-				referrer: document.referrer
+				referrer: document.referrer,
+				eventType: 'arrive',
+				eventDateTimeUtc: dateUtc
 			}
 			console.log(impression);
 		},
@@ -31,9 +34,21 @@ function setupStatsForager(setup) {
 				s => (rand[i++] + s * 0x10000 >> s).toString(16).padStart(4, "0")
 			);
 		},
+
+		getDateUtcNowIso: function() {
+			let now = new Date();
+			let nowUtc = Date.UTC(
+				now.getUTCFullYear(), 
+				now.getUTCMonth(),
+				now.getUTCDate(), 
+				now.getUTCHours(),
+				now.getUTCMinutes(), 
+				now.getUTCSeconds());
+			let nowUtcFmt = new Date(nowUtc).toISOString();
+			return nowUtcFmt;
+		},
 	};
 
-	console.log("here");
 	console.log(setup);
 	addEventListener("beforeunload", async () => { await statsForager.leave(); });
 	statsForager.arrive(setup);
