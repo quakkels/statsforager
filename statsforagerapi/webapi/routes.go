@@ -18,13 +18,7 @@ func RegisterRoutes(
 	builddate string,
 	hash string,
 	statsdatastore StatsDataStore) {
-	mux.HandleFunc("GET /route/{siteKey}", func(w http.ResponseWriter, r *http.Request) {
-		id := r.PathValue("siteKey")
-		var dbversion string
-		statsdatastore.QueryRow(r.Context(), "SELECT version FROM db_version").Scan(&dbversion)
-		w.Write([]byte("you found me: " + id + "\n\n"))
-		w.Write([]byte("<p>db version: " + dbversion + "</p>\n\n"))
-	})
-
+	mux.HandleFunc("PUT /api/sites/{siteKey}/impression/{impressionId}", PutImpressionHandler(statsdatastore))
+	mux.HandleFunc("PUT /api/sites/{siteKey}/impression/{impressionId}/end", PutImpressionLeavingHandler(statsdatastore))
 	mux.HandleFunc("GET /health", HealthHandler(version, builddate, hash, statsdatastore))
 }

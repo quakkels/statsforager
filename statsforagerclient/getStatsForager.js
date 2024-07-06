@@ -11,7 +11,7 @@ function setupStatsForager(setup) {
 				language: navigator.language,
 				location: window.location.href,
 				referrer: document.referrer,
-				eventType: 'arrive',
+				isLeaving: false,
 				eventDateTimeUtc: dateUtc
 			}
 			console.log(impression);

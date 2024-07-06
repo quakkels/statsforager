@@ -5,7 +5,6 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- update database to track length of impression
 
 ### Needs doing
 - API connect to database from docker container
@@ -18,6 +17,7 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - site ownership verification
 
 ### Done
+- update database to track length of impression
 - hosting deploy process (deploy api to railway via docker hub)
 - create and migrate remote database
 - choose host provider (railway)
