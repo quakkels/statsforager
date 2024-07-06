@@ -11,7 +11,7 @@ run: image
 publish: image
 	@docker push quakkels/statsforagerapi
 
-runnative: build
+run_native: build
 	@./bin/statsforagerapi
 
 test:
