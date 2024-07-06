@@ -24,8 +24,15 @@ func NewStatsDataStore(ctx context.Context, connString string) (*statsDataStore,
 		if err != nil {
 			poolError = fmt.Errorf("Unable to create connection pool: %w", err)
 			return
-		} else {
-			fmt.Println("no error when making pool")
+		}
+
+		err = db.Ping(ctx)
+		if err != nil {
+			poolError = fmt.Errorf("Unable to establish connection with database: %w", err)
+		}
+
+		if err == nil {
+			fmt.Println("Created db connection pool and established connection")
 		}
 
 		pgInstance = &statsDataStore{db}
