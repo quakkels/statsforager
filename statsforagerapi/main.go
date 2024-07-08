@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"statsforagerapi/dataaccess"
+	"statsforagerapi/domain"
 	"statsforagerapi/webapi"
 	"statsforagerapi/webapi/middleware"
 )
@@ -35,14 +36,17 @@ func main() {
 	}
 	defer statsDataStore.Close()
 
+	impressionsRepo := dataaccess.NewImpressionsRepo(*statsDataStore)
+	impressionsManager := domain.NewImpressionsManager(impressionsRepo)
+	
 	mux := http.NewServeMux()
-
 	webapi.RegisterRoutes(
 		mux,
 		Version,
 		BuildDate,
 		Hash,
-		statsDataStore)
+		statsDataStore,
+		impressionsManager)
 
 	middlewareStack := middleware.CreateStack(
 		middleware.Logging,

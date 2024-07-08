@@ -1,8 +1,11 @@
 package webapi
 
-import "net/http"
+import (
+	"net/http"
+	"statsforagerapi/domain"
+)
 
-func PutImpressionHandler(statsdatastore StatsDataStore) func(http.ResponseWriter, *http.Request) {
+func PutImpressionHandler(impressionsManager domain.ImpressionsManager) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// todo: how to make a manager or service with a lifecycle for just this request?
 
@@ -24,13 +27,9 @@ func PutImpressionHandler(statsdatastore StatsDataStore) func(http.ResponseWrite
 	}
 }
 
-func PutImpressionLeavingHandler(statsdatastore StatsDataStore) func(http.ResponseWriter, *http.Request) {
+func PutImpressionLeavingHandler(impressionsManager domain.ImpressionsManager) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// todo: how to make a manager or service with a lifecycle for just this request?
-		// impressionId := r.PathValue("impressionId")
-
-		var dbversion string
-		statsdatastore.QueryRow(r.Context(), "SELECT version FROM db_version").Scan(&dbversion)
 
 		impressionId := r.PathValue("impressionId")
 		siteKey := r.PathValue("siteKey")

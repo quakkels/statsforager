@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -48,3 +49,8 @@ func (pg *statsDataStore) Close() {
 func (pg *statsDataStore) QueryRow(ctx context.Context, sql string) pgx.Row {
 	return pg.db.QueryRow(ctx, sql)
 }
+
+func (pg *statsDataStore) Exec(ctx context.Context, sql string, arguments ...any) (pgconn.CommandTag, error) {
+	return pg.db.Exec(ctx, sql, arguments)
+}
+
