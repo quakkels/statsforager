@@ -8,5 +8,6 @@ BEGIN;
 \i scripts/0002.sql
 \i scripts/0003_impressions_add_is_leaving_pkey.sql
 \i scripts/0004_impressions_site_fk.sql
+\i scripts/0005_impressions_change_leaving.sql
 COMMIT;
 

@@ -14,7 +14,7 @@ func NewImpressionsRepo(dataStore statsDataStore) ImpressionsRepo {
 	return ImpressionsRepo{dataStore}
 }
 
-func (impRepo ImpressionsRepo) SaveImpression(
+func (impRepo *ImpressionsRepo) SaveImpression(
 	context context.Context,
 	impression domain.Impression) error {
 
@@ -27,10 +27,10 @@ func (impRepo ImpressionsRepo) SaveImpression(
 				language,
 				location,
 				referrer,
-				date_time,
-				event_date_time_utc,
 				site_key,
-				is_leaving) 
+				started_utc,
+				completed_utc, 
+				created_utc)
 			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`
 	cmdTag, err := impRepo.dataStore.Exec(
 		context,
@@ -41,10 +41,10 @@ func (impRepo ImpressionsRepo) SaveImpression(
 		impression.Language,
 		impression.Location,
 		impression.Referrer,
-		impression.DateTime,
-		impression.EventDateTimeUtc,
 		impression.SiteKey,
-		impression.IsLeaving)
+		impression.StartedUtc,
+		impression.CompletedUtc,
+		impression.CreatedUtc)
 	if err != nil {
 		return err
 	}

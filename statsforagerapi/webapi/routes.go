@@ -14,17 +14,18 @@ type StatsDataStore interface {
 	Exec(ctx context.Context, sql string, arguments ...any) (pgconn.CommandTag, error)
 }
 
+type AppInfo struct {
+	Version string
+	BuildDate string
+	Hash string
+}
+
 func RegisterRoutes(
 	mux *http.ServeMux,
-	version string,
-	builddate string,
-	hash string,
+	appInfo AppInfo,
 	statsdatastore StatsDataStore,
 	impressionsManager domain.ImpressionsManager) {
-	// deps
-
 	// routes
-	mux.HandleFunc("PUT /api/sites/{siteKey}/impression/{impressionId}", PutImpressionHandler(impressionsManager))
-	mux.HandleFunc("PUT /api/sites/{siteKey}/impression/{impressionId}/end", PutImpressionLeavingHandler(impressionsManager))
-	mux.HandleFunc("GET /health", HealthHandler(version, builddate, hash, statsdatastore))
+	mux.HandleFunc("PUT /api/sites/{siteKey}/impression/{impressionId}", PostImpressionHandler(impressionsManager))
+	mux.HandleFunc("GET /health", HealthHandler(appInfo, statsdatastore))
 }

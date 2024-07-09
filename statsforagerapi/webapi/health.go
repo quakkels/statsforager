@@ -5,9 +5,7 @@ import (
 )
 
 func HealthHandler(
-	appVersion string,
-	appBuildDate string,
-	appHash string,
+	appInfo AppInfo,
 	statsdatastore StatsDataStore) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 
@@ -23,9 +21,9 @@ func HealthHandler(
 
 		model := health{
 			DatabaseVersion: dbversion,
-			ApiVersion:      appVersion,
-			ApiBuildDate:    appBuildDate,
-			ApiHash:         appHash,
+			ApiVersion:      appInfo.Version,
+			ApiBuildDate:    appInfo.BuildDate,
+			ApiHash:         appInfo.Hash,
 		}
 
 		WriteJSON(w, http.StatusOK, model)

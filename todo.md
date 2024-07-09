@@ -5,10 +5,10 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
+- api (save sitekey, impressionId, IP, user data from client)
 
 ### Needs doing
 - API connect to database from docker container
-- api (save sitekey, impressionId, IP, user data from client)
 - script client call api
 - api noscript gif using site key
 - api endpoint for script client using site key

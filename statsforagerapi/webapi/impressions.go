@@ -5,7 +5,7 @@ import (
 	"statsforagerapi/domain"
 )
 
-func PutImpressionHandler(impressionsManager domain.ImpressionsManager) func(http.ResponseWriter, *http.Request) {
+func PostImpressionHandler(impressionsManager domain.ImpressionsManager) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// todo: how to make a manager or service with a lifecycle for just this request?
 
@@ -21,27 +21,6 @@ func PutImpressionHandler(impressionsManager domain.ImpressionsManager) func(htt
 		}{
 			SiteKey:      siteKey,
 			ImpressionId: impressionId,
-		}
-
-		WriteJSON(w, http.StatusOK, result)
-	}
-}
-
-func PutImpressionLeavingHandler(impressionsManager domain.ImpressionsManager) func(http.ResponseWriter, *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		// todo: how to make a manager or service with a lifecycle for just this request?
-
-		impressionId := r.PathValue("impressionId")
-		siteKey := r.PathValue("siteKey")
-
-		result := struct {
-			SiteKey      string `json:"site_key"`
-			ImpressionId string `json:"impression_id"`
-			End          bool   `json:"end"`
-		}{
-			SiteKey:      siteKey,
-			ImpressionId: impressionId,
-			End:          true,
 		}
 
 		WriteJSON(w, http.StatusOK, result)

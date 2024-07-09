@@ -11,8 +11,8 @@ function setupStatsForager(setup) {
 				language: navigator.language,
 				location: window.location.href,
 				referrer: document.referrer,
-				isLeaving: false,
-				eventDateTimeUtc: dateUtc
+				startedUtc: dateUtc,
+				completedUtc: dateUtc
 			}
 			console.log(impression);
 		},

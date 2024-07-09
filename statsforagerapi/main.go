@@ -18,6 +18,8 @@ var (
 )
 
 func main() {
+	appInfo := webapi.AppInfo{Version: Version, BuildDate: BuildDate, Hash: Hash}
+
 	const (
 		host     = "localhost"
 		port     = 5432
@@ -38,13 +40,11 @@ func main() {
 
 	impressionsRepo := dataaccess.NewImpressionsRepo(*statsDataStore)
 	impressionsManager := domain.NewImpressionsManager(impressionsRepo)
-	
+
 	mux := http.NewServeMux()
 	webapi.RegisterRoutes(
 		mux,
-		Version,
-		BuildDate,
-		Hash,
+		appInfo,
 		statsDataStore,
 		impressionsManager)
 
