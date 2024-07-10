@@ -15,9 +15,9 @@ type StatsDataStore interface {
 }
 
 type AppInfo struct {
-	Version string
+	Version   string
 	BuildDate string
-	Hash string
+	Hash      string
 }
 
 func RegisterRoutes(
@@ -26,6 +26,6 @@ func RegisterRoutes(
 	statsdatastore StatsDataStore,
 	impressionsManager domain.ImpressionsManager) {
 	// routes
-	mux.HandleFunc("PUT /api/sites/{siteKey}/impression/{impressionId}", PostImpressionHandler(impressionsManager))
+	mux.HandleFunc("PUT /api/sites/{siteKey}/impression/{impressionId}", PutImpressionHandler(impressionsManager))
 	mux.HandleFunc("GET /health", HealthHandler(appInfo, statsdatastore))
 }
