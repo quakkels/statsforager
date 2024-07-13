@@ -39,7 +39,7 @@ func main() {
 	defer statsDataStore.Close()
 
 	impressionsRepo := dataaccess.NewImpressionsRepo(*statsDataStore)
-	impressionsManager := domain.NewImpressionsManager(impressionsRepo)
+	impressionsManager := domain.NewImpressionsManager(&impressionsRepo)
 
 	mux := http.NewServeMux()
 	webapi.RegisterRoutes(
@@ -56,6 +56,10 @@ func main() {
 		Addr:    ":8000",
 		Handler: middlewareStack(mux),
 	}
-
-	server.ListenAndServe()
+	fmt.Println("---about to listen and serve")
+	err = server.ListenAndServe()
+	fmt.Println("---after listening and serving")
+	if err != nil {
+		fmt.Println(err)
+	}
 }

@@ -10,8 +10,8 @@ import (
 )
 
 type StatsDataStore interface {
-	QueryRow(context.Context, string) pgx.Row
-	Exec(ctx context.Context, sql string, arguments ...any) (pgconn.CommandTag, error)
+	QueryRow(context.Context, string, ...any) pgx.Row
+	Exec(context.Context, string, ...any) (pgconn.CommandTag, error)
 }
 
 type AppInfo struct {
