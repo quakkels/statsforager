@@ -15,6 +15,16 @@ function setupStatsForager(setup) {
 				completedUtc: dateUtc
 			}
 			console.log(impression);
+			window.fetch(
+				`http://localhost:8000/api/sites/${setup.siteKey}/impressions/${impressionId}`,
+				{
+					method: 'PUT',
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(impression)
+				}
+			);
 		},
 
 		leave: async function() {

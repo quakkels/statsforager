@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-func HealthHandler(
+func healthHandler(
 	appInfo AppInfo,
 	statsdatastore StatsDataStore) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -26,6 +26,6 @@ func HealthHandler(
 			ApiHash:         appInfo.Hash,
 		}
 
-		WriteJSON(w, http.StatusOK, model)
+		WriteJson(w, http.StatusOK, model)
 	}
 }

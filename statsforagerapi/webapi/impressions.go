@@ -10,8 +10,10 @@ import (
 	"time"
 )
 
-func PutImpressionHandler(impressionsManager domain.ImpressionsManager) func(http.ResponseWriter, *http.Request) {
+func putImpressionHandler(impressionsManager domain.ImpressionsManager) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		setupCors(w)
+
 		siteKey := r.PathValue("siteKey")
 		impressionId := r.PathValue("impressionId")
 		ipAddress := r.Header.Get(http.CanonicalHeaderKey("x-forwarded-for"))
@@ -20,7 +22,7 @@ func PutImpressionHandler(impressionsManager domain.ImpressionsManager) func(htt
 			ipAddress, _, err = net.SplitHostPort(r.RemoteAddr)
 			if err != nil {
 				log.Fatal("Error finding remote IP: ", err.Error())
-				WriteJSON(w, http.StatusInternalServerError, "Error finding remote IP")
+				WriteJson(w, http.StatusInternalServerError, "Error finding remote IP")
 			}
 		}
 
@@ -51,14 +53,14 @@ func PutImpressionHandler(impressionsManager domain.ImpressionsManager) func(htt
 
 		if err != nil {
 			fmt.Println("Error: could not save impression. ", err.Error())
-			WriteJSON(w, http.StatusInternalServerError, errorResponse{"Error saving impression"})
+			WriteJson(w, http.StatusInternalServerError, errorResponse{"Error saving impression"})
 			return
 		}
 		
 		if !result.IsSuccess {
-			WriteJSON(w, http.StatusBadRequest, result.Messages)
+			WriteJson(w, http.StatusBadRequest, result.Messages)
 		} else {
-			WriteJSON(w, http.StatusOK, model)
+			WriteJson(w, http.StatusOK, model)
 		}
 	}
 }

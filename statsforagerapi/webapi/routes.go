@@ -26,6 +26,8 @@ func RegisterRoutes(
 	statsdatastore StatsDataStore,
 	impressionsManager domain.ImpressionsManager) {
 	// routes
-	mux.HandleFunc("PUT /api/sites/{siteKey}/impression/{impressionId}", PutImpressionHandler(impressionsManager))
-	mux.HandleFunc("GET /health", HealthHandler(appInfo, statsdatastore))
+	mux.HandleFunc("PUT /api/sites/{siteKey}/impressions/{impressionId}", putImpressionHandler(impressionsManager))
+	mux.HandleFunc("OPTIONS /api/sites/{siteKey}/impressions/{impressionId}", optionsCorsHandler())
+	mux.HandleFunc("GET /health", healthHandler(appInfo, statsdatastore))
 }
+

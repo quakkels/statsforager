@@ -5,17 +5,17 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- script client call api
+- validate impression location is approved for site
 
 ### Needs doing
-- API connect to database from docker container
 - api noscript gif using site key
-- api endpoint for script client using site key
+- API connect to database from docker container
 - user dashboard
-- hosting deploy server config allowing CORS
 - site ownership verification
 
 ### Done
+- hosting deploy server config allowing CORS
+- script client call api
 - api (save sitekey, impressionId, IP, user data from client)
 - update database to track length of impression
 - hosting deploy process (deploy api to railway via docker hub)
@@ -26,7 +26,7 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - choose database
 
 ## Beyond MVP
-
+- api endpoint for script client using site key (is this necessary? maybe not MVP)
 - donate button
 - subscribe
 - how to proxy guide
