@@ -5,13 +5,14 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- validate impression location is approved for site
+- forager site template
 
 ### Needs doing
+- serve static files for client css and scripts
 - API connect to database from docker container
-- user dashboard
 
 ### Done
+- validate impression location is approved for site
 - hosting deploy server config allowing CORS
 - script client call api
 - api (save sitekey, impressionId, IP, user data from client)
