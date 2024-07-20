@@ -51,19 +51,19 @@ func (impRepo *ImpressionsRepo) SaveImpression(
 			site_key = source.site_key,
 			started_utc = source.started_utc,
 			completed_utc = source.completed_utc;
-	`//*/
+	` //*/
 	cmdTag, err := impRepo.dataStore.Exec(
 		context,
 		sql,
 		pgx.NamedArgs{
 			"impressionId": impression.ImpressionId,
-			"ipAddress": impression.IpAddress,
-			"userAgent": impression.UserAgent,
-			"language": impression.Language,
-			"location": impression.Location,
-			"referrer": impression.Referrer,
-			"siteKey": impression.SiteKey,
-			"startedUtc": impression.StartedUtc,
+			"ipAddress":    impression.IpAddress,
+			"userAgent":    impression.UserAgent,
+			"language":     impression.Language,
+			"location":     impression.Location,
+			"referrer":     impression.Referrer,
+			"siteKey":      impression.SiteKey,
+			"startedUtc":   impression.StartedUtc,
 			"completedUtc": impression.CompletedUtc})
 	if err != nil {
 		var pgErr *pgconn.PgError
@@ -78,4 +78,3 @@ func (impRepo *ImpressionsRepo) SaveImpression(
 	}
 	return nil
 }
-

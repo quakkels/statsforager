@@ -17,11 +17,11 @@ func WriteJson(w http.ResponseWriter, status int, v any) error {
 }
 
 func setupCors(w http.ResponseWriter) {
-    w.Header().Add("Access-Control-Allow-Origin", "*")
-    w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-    w.Header().Set(
-			"Access-Control-Allow-Headers",
-			"Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+	w.Header().Add("Access-Control-Allow-Origin", "*")
+	w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set(
+		"Access-Control-Allow-Headers",
+		"Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
 }
 
 func optionsCorsHandler() func(http.ResponseWriter, *http.Request) {

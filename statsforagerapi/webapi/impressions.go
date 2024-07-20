@@ -37,7 +37,7 @@ func putImpressionHandler(impressionsManager domain.ImpressionsManager) func(htt
 
 		var model impressionModel
 		enc := json.NewDecoder(r.Body)
-    enc.Decode(&model)
+		enc.Decode(&model)
 
 		result, err := impressionsManager.SaveImpression(
 			r.Context(),
@@ -56,7 +56,7 @@ func putImpressionHandler(impressionsManager domain.ImpressionsManager) func(htt
 			WriteJson(w, http.StatusInternalServerError, errorResponse{"Error saving impression"})
 			return
 		}
-		
+
 		if !result.IsSuccess {
 			WriteJson(w, http.StatusBadRequest, result.Messages)
 		} else {

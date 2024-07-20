@@ -53,4 +53,3 @@ func (pg *statsDataStore) QueryRow(ctx context.Context, sql string, arguments ..
 func (pg *statsDataStore) Exec(ctx context.Context, sql string, arguments ...any) (pgconn.CommandTag, error) {
 	return pg.db.Exec(ctx, sql, arguments...)
 }
-

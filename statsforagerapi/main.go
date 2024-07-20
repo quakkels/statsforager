@@ -39,7 +39,10 @@ func main() {
 	defer statsDataStore.Close()
 
 	impressionsRepo := dataaccess.NewImpressionsRepo(*statsDataStore)
-	impressionsManager := domain.NewImpressionsManager(&impressionsRepo)
+	sitesRepo := dataaccess.NewSitesRepo(*statsDataStore)
+	impressionsManager := domain.NewImpressionsManager(
+		&impressionsRepo,
+		&sitesRepo)
 
 	mux := http.NewServeMux()
 	webapi.RegisterRoutes(

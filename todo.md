@@ -8,10 +8,8 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - validate impression location is approved for site
 
 ### Needs doing
-- api noscript gif using site key
 - API connect to database from docker container
 - user dashboard
-- site ownership verification
 
 ### Done
 - hosting deploy server config allowing CORS
@@ -26,6 +24,8 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - choose database
 
 ## Beyond MVP
+- site ownership verification
+- api noscript gif using site key
 - api endpoint for script client using site key (is this necessary? maybe not MVP)
 - donate button
 - subscribe
