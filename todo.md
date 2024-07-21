@@ -5,11 +5,16 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- forager site template
+- forager site template (main template with support for partials, and place to put custom template functions)
 
 ### Needs doing
+- landing page route + template
+- dashboard page + template
 - serve static files for client css and scripts
 - API connect to database from docker container
+- registration
+- login
+- Getting Started (probably on landing page)
 
 ### Done
 - validate impression location is approved for site
