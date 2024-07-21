@@ -9,7 +9,6 @@ type SitesRepo struct {
 	dataStore statsDataStore
 }
 
-
 func NewSitesRepo(dataStore statsDataStore) SitesRepo {
 	return SitesRepo{dataStore}
 }
@@ -21,4 +20,3 @@ func (repo *SitesRepo) GetSite(context context.Context, siteKey string) (domain.
 		Scan(&site.SiteKey, &site.Domain)
 	return site, err
 }
-

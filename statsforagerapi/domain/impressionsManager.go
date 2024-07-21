@@ -35,7 +35,7 @@ func NewImpressionsManager(
 	sitesrepo SitesRepository) ImpressionsManager {
 	manager := ImpressionsManager{
 		ImpressionsRepo: repo,
-		SitesRepo: sitesrepo,
+		SitesRepo:       sitesrepo,
 	}
 	return manager
 }
