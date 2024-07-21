@@ -7,8 +7,8 @@ import (
 
 	"statsforagerapi/dataaccess"
 	"statsforagerapi/domain"
-	"statsforagerapi/webapi"
-	"statsforagerapi/webapi/middleware"
+	"statsforagerapi/web"
+	"statsforagerapi/web/middleware"
 )
 
 var (
@@ -18,7 +18,7 @@ var (
 )
 
 func main() {
-	appInfo := webapi.AppInfo{Version: Version, BuildDate: BuildDate, Hash: Hash}
+	appInfo := web.AppInfo{Version: Version, BuildDate: BuildDate, Hash: Hash}
 
 	const (
 		host     = "localhost"
@@ -45,7 +45,7 @@ func main() {
 		&sitesRepo)
 
 	mux := http.NewServeMux()
-	webapi.RegisterRoutes(
+	web.RegisterRoutes(
 		mux,
 		appInfo,
 		statsDataStore,

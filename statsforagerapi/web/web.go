@@ -1,9 +1,13 @@
-package webapi
+package web
 
 import (
+	"embed"
 	"encoding/json"
 	"net/http"
 )
+
+//go:embed templates/*.html
+var tplFs embed.FS
 
 type errorResponse struct {
 	Message string `json:"message"`
