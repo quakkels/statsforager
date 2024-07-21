@@ -33,31 +33,6 @@ func RegisterRoutes(
 	// routes
 	mux.HandleFunc("PUT /api/sites/{siteKey}/impressions/{impressionId}", putImpressionHandler(impressionsManager))
 	mux.HandleFunc("OPTIONS /api/sites/{siteKey}/impressions/{impressionId}", optionsCorsHandler())
-	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-
-		if r.URL.Path != "/" {
-			http.NotFound(w, r)
-			return
-		}
-
-		var dbversion string
-		statsdatastore.QueryRow(r.Context(), "SELECT version FROM db_version").Scan(&dbversion)
-
-		type health struct {
-			DatabaseVersion string `json:"database_version"`
-			ApiVersion      string `json:"api_version"`
-			ApiBuildDate    string `json:"api_build_date"`
-			ApiHash         string `json:"api_hash"`
-		}
-
-		model := health{
-			DatabaseVersion: dbversion,
-			ApiVersion:      appInfo.Version,
-			ApiBuildDate:    appInfo.BuildDate,
-			ApiHash:         appInfo.Hash,
-		}
-
-		t.Execute(w, model)
-	})
 	mux.HandleFunc("GET /health", healthHandler(appInfo, statsdatastore))
+	mux.HandleFunc("GET /", getHomeHandler())
 }
