@@ -34,5 +34,6 @@ func RegisterRoutes(
 	mux.HandleFunc("PUT /api/sites/{siteKey}/impressions/{impressionId}", putImpressionHandler(impressionsManager))
 	mux.HandleFunc("OPTIONS /api/sites/{siteKey}/impressions/{impressionId}", optionsCorsHandler())
 	mux.HandleFunc("GET /health", healthHandler(appInfo, statsdatastore))
+	mux.Handle("GET /static/", http.FileServer(http.FS(staticFs)))
 	mux.HandleFunc("GET /", getHomeHandler())
 }

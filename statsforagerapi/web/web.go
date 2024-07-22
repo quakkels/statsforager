@@ -9,6 +9,9 @@ import (
 //go:embed templates/*.html
 var tplFs embed.FS
 
+//go:embed static/*
+var staticFs embed.FS
+
 type errorResponse struct {
 	Message string `json:"message"`
 }

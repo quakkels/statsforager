@@ -10,13 +10,13 @@ and removes dependencies on unstrustworthy data hogs like Google.
 ### Needs doing
 - landing page route + template
 - dashboard page + template
-- serve static files for client css and scripts
 - API connect to database from docker container
 - registration
 - login
 - Getting Started (probably on landing page)
 
 ### Done
+- serve static files for client css and scripts
 - validate impression location is approved for site
 - hosting deploy server config allowing CORS
 - script client call api

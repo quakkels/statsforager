@@ -1,6 +1,58 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="icon" type="image/svg+xml" href="/vite.svg">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Feed Forager - Find RSS Feeds with this RSS Discovery Engine.</title>
+		<link rel="stylesheet" href="/styles/base.css">
+	</head>
 	<body>
-		{{.Content}}
+		<header>
+			<h1><a href="/">{{.Content}}</a></h1>
+			<div>
+				<button class="subtle" id="theme-toggle">Theme</button>
+				<a href="https://github.com/quakkels/rssdiscoveryengine" target="_blank" class="button">Source</a>
+			</div>
+		</header>
+		<main>
+			<forager-form></forager-form>
+			<section>
+				<article>
+					<h1>What's Feed Forager all about?</h1>
+					<p>Our vision is supported by three pillars:</p>
+					<ol>
+						<li><em>Exploration!</em></li>
+						<li><em>Independence!</em></li>
+						<li><em>Discovery!</em></li>
+					</ol>
+				</article>
+			</section>
+			<section>
+				<h2>Exploration</h2>
+				<p>
+					Feed Forager will help you explore the wild internet through Blog feeds. Feed Forager is not a search engine!
+					It doesn't use a traditional search algorithm. Instead, it uses a blog you provide to forage through and find 
+					other blogs.
+				</p>
+				<p>
+					The basic assumption is: blogs you like will link to other blogs you might like. So you can give Feed Forager 
+					a starting point, then you can walk through results, pausing to appreciate anything that catches your eye.
+				</p>
+			</section>
+			<section>
+				<h2>Independence</h2>
+				<p>Feed Forager and the underlying RSS Discovery Engine is completely independent of internet gatekeeping giants 
+					such as X (Twitter,) Google, Facebook, and Microsoft.
+				</p>
+			</section>
+			<section>
+				<h2>Discovery</h2>
+				<p>
+					We exist so that you can discover creators and content that are niche and new, even if they aren't "gatekeeper approved."
+				</p>
+			</section>
+		</main>
+		<script type="module" src="/client/main.js"></script>
 	</body>
 </html>
