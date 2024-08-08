@@ -6,7 +6,7 @@ import (
 
 func getHomeHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/" {
+		if r.URL.Path != "/" { // only routes that end with '/' need this
 			http.NotFound(w, r)
 			return
 		}

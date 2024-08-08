@@ -3,6 +3,7 @@ package web
 import (
 	"embed"
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -20,6 +21,7 @@ type errorResponse struct {
 var tpl = make(map[string]*template.Template)
 
 func init() {
+	tpl["register"] = template.Must(template.ParseFS(tplFs, "templates/base.html", "templates/register.html"))
 	tpl["home"] = template.Must(template.ParseFS(tplFs, "templates/base.html", "templates/home.html"))
 }
 

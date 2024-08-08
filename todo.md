@@ -1,21 +1,21 @@
 # StatsForager To Do
 
 ## MVP
-**Goal:** Make a webiste analytics service that respects site owner privacy, user privacy,
+**Goal:** Make a website analytics service that respects site owner privacy, user privacy,
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- forager site template (main template with support for partials, and place to put custom template functions)
+- dashboard page + template
 
 ### Needs doing
-- landing page route + template
-- dashboard page + template
 - API connect to database from docker container
 - registration
 - login
 - Getting Started (probably on landing page)
 
 ### Done
+- landing page route + template
+- forager site template (main template with support for partials, and place to put custom template functions)
 - serve static files for client css and scripts
 - validate impression location is approved for site
 - hosting deploy server config allowing CORS

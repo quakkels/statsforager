@@ -9,7 +9,12 @@
 	</head>
 	<body>
 		<header class="header">
-			{{ template "header" . }}
+			<nav class="nav">
+				<a class="button transparent" href="/">
+					StatsForager</a>
+				<a class="button" href="#">Login</a>
+				<a class="button" href="/register">Register</a>
+			</nav>
 		</header>
 		<main>
 			{{ template "main" . }}
