@@ -2,7 +2,6 @@ package web
 
 import (
 	"context"
-	"html/template"
 	"net/http"
 	"statsforagerapi/domain"
 
@@ -21,9 +20,6 @@ type AppInfo struct {
 	Hash      string
 }
 
-// cache the template to avoid reparsing it on every request
-
-var t = template.Must(template.ParseFS(tplFs, "templates/layout.html"))
 
 func RegisterRoutes(
 	mux *http.ServeMux,

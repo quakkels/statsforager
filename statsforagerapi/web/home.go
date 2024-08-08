@@ -1,6 +1,8 @@
 package web
 
-import "net/http"
+import (
+	"net/http"
+)
 
 func getHomeHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -15,6 +17,7 @@ func getHomeHandler() func(http.ResponseWriter, *http.Request) {
 			Content: "Welcome to StatsForager",
 		}
 
-		t.Execute(w, model)
+		tpl["home"].Execute(w, model)
 	}
 }
+
