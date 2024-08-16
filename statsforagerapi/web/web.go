@@ -3,7 +3,6 @@ package web
 import (
 	"embed"
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"net/http"
 )
