@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"statsforagerapi/dataaccess"
-	"statsforagerapi/domain"
-	"statsforagerapi/web"
-	"statsforagerapi/web/middleware"
+	"statsforagerweb/dataaccess"
+	"statsforagerweb/domain"
+	"statsforagerweb/web"
+	"statsforagerweb/web/middleware"
 )
 
 var (
@@ -43,13 +43,15 @@ func main() {
 	impressionsManager := domain.NewImpressionsManager(
 		&impressionsRepo,
 		&sitesRepo)
+	sitesManager := domain.NewSitesManager(&sitesRepo)
 
 	mux := http.NewServeMux()
 	web.RegisterRoutes(
 		mux,
 		appInfo,
 		statsDataStore,
-		impressionsManager)
+		impressionsManager,
+		sitesManager)
 
 	middlewareStack := middleware.CreateStack(
 		middleware.Logging,

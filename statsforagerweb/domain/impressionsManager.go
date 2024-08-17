@@ -28,6 +28,7 @@ type Impression struct {
 
 type ImpressionsRepository interface {
 	SaveImpression(context.Context, Impression) error
+	GetAllImpressions(context.Context) ([]Impression, error)
 }
 
 func NewImpressionsManager(
@@ -129,4 +130,9 @@ func (manager *ImpressionsManager) ValidateImpression(
 	}
 
 	return NewValidationResult(messages), nil
+}
+
+func (manager *ImpressionsManager) GetAllImpressions(ctx context.Context) ([]Impression, error) {
+	fmt.Println("In manager.GetAllImpressions")
+	return manager.ImpressionsRepo.GetAllImpressions(ctx)
 }

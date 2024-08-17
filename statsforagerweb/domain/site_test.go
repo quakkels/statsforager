@@ -1,7 +1,7 @@
 package domain_test
 
 import (
-	"statsforagerapi/domain"
+	"statsforagerweb/domain"
 	"testing"
 )
 

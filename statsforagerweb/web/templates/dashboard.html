@@ -1,0 +1,44 @@
+{{ define "head" }}<title>StatsForager.com</title>{{ end }}
+{{ define "main" }}
+<section>
+	<h2>Sites</h2>
+	<table>
+		<tr>
+		<th>Domain</th>
+		</tr>
+		{{range .Sites}}<tr><td>{{ .Domain }}</td></tr>{{else}}<tr><td>no rows</td></tr>{{end}}
+	</table>
+	
+	<h2>Impressions</h2>
+	<table>
+		<tr>
+		<th>Impression ID</th>
+		<th>IP Address</th>
+		<th>User Agent</th>
+		<th>Language</th>
+		<th>Location</th>
+		<th>Referrer</th>
+		<th>Site Key</th>
+		<th>Created</th>
+		<th>Started</th>
+		<th>Completed</th>
+		</tr>{{range .Impressions}}
+		<tr>
+			<td>{{ .ImpressionId }}</td>
+			<td>{{ .IpAddress }}</td>
+			<td>{{ .UserAgent }}</td>
+			<td>{{ .Language }}</td>
+			<td>{{ .Location }}</td>
+			<td>{{ .Referrer }}</td>
+			<td>{{ .SiteKey }}</td>
+			<td>{{ .CreatedUtc }}</td>
+			<td>{{ .StartedUtc }}</td>
+			<td>{{ .CompletedUtc }}</td>
+		</tr>{{else}}
+		<tr>
+			<td>no rows</td>
+		</tr>{{end}}
+	</table>
+</section>
+{{ end }}
+

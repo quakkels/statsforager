@@ -20,4 +20,3 @@ func getHomeHandler() func(http.ResponseWriter, *http.Request) {
 		tpl["home"].Execute(w, model)
 	}
 }
-

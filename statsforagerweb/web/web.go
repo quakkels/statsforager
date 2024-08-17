@@ -20,8 +20,9 @@ type errorResponse struct {
 var tpl = make(map[string]*template.Template)
 
 func init() {
-	tpl["register"] = template.Must(template.ParseFS(tplFs, "templates/base.html", "templates/register.html"))
 	tpl["home"] = template.Must(template.ParseFS(tplFs, "templates/base.html", "templates/home.html"))
+	tpl["register"] = template.Must(template.ParseFS(tplFs, "templates/base.html", "templates/register.html"))
+	tpl["dashboard"] = template.Must(template.ParseFS(tplFs, "templates/base.html", "templates/dashboard.html"))
 }
 
 func WriteJson(w http.ResponseWriter, status int, v any) error {

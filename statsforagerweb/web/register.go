@@ -18,4 +18,3 @@ func getRegisterHandler() func(http.ResponseWriter, *http.Request) {
 		}
 	}
 }
-

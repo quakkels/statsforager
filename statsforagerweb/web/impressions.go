@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"statsforagerapi/domain"
+	"statsforagerweb/domain"
 	"time"
 )
 

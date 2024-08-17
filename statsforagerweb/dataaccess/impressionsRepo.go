@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"statsforagerapi/domain"
+	"statsforagerweb/domain"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -51,7 +51,8 @@ func (impRepo *ImpressionsRepo) SaveImpression(
 			site_key = source.site_key,
 			started_utc = source.started_utc,
 			completed_utc = source.completed_utc;
-	` //*/
+	`
+
 	cmdTag, err := impRepo.dataStore.Exec(
 		context,
 		sql,
@@ -77,4 +78,45 @@ func (impRepo *ImpressionsRepo) SaveImpression(
 		return errors.New("Insert impression affected no rows")
 	}
 	return nil
+}
+
+func (repo *ImpressionsRepo) GetAllImpressions(ctx context.Context) ([]domain.Impression, error) {
+	fmt.Println("In repo.GetAllImpressions()")
+	var impressions []domain.Impression
+	const sql = "SELECT impression_id, ip_address, user_agent, language, location, referrer, site_key, started_utc,	completed_utc FROM impressions;"
+	rows, err := repo.dataStore.Query(ctx, sql)
+	defer rows.Close()
+	if err != nil {
+		fmt.Println("line 90")
+		return impressions, nil
+	}
+
+		fmt.Println("line 94")
+	for rows.Next() {
+		fmt.Println("line 96 in loop")
+		var impression domain.Impression
+		err := rows.Scan(
+			&impression.ImpressionId,
+			&impression.IpAddress,
+			&impression.UserAgent,
+			&impression.Language,
+			&impression.Location,
+			&impression.Referrer,
+			&impression.SiteKey,
+			&impression.StartedUtc,
+			&impression.CompletedUtc)
+
+		if err != nil {
+		fmt.Println("line 110 in error")//can't scan into dest[1]: cannot scan inet (OID 869) in binary format into *s
+
+			return nil, err
+		}
+
+		impressions = append(impressions, impression)
+	}
+
+	err = rows.Err() // get error from rows.Next() or rows.Scan()
+
+	fmt.Println("Impression count", len(impressions))
+	return impressions, err
 }
