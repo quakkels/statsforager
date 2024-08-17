@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/netip"
 	"statsforagerweb/domain"
 
 	"github.com/jackc/pgx/v5"
@@ -81,23 +82,20 @@ func (impRepo *ImpressionsRepo) SaveImpression(
 }
 
 func (repo *ImpressionsRepo) GetAllImpressions(ctx context.Context) ([]domain.Impression, error) {
-	fmt.Println("In repo.GetAllImpressions()")
 	var impressions []domain.Impression
 	const sql = "SELECT impression_id, ip_address, user_agent, language, location, referrer, site_key, started_utc,	completed_utc FROM impressions;"
 	rows, err := repo.dataStore.Query(ctx, sql)
 	defer rows.Close()
 	if err != nil {
-		fmt.Println("line 90")
 		return impressions, nil
 	}
 
-		fmt.Println("line 94")
 	for rows.Next() {
-		fmt.Println("line 96 in loop")
+		var ip netip.Addr
 		var impression domain.Impression
 		err := rows.Scan(
 			&impression.ImpressionId,
-			&impression.IpAddress,
+			&ip, // impression.IpAddress,
 			&impression.UserAgent,
 			&impression.Language,
 			&impression.Location,
@@ -105,10 +103,9 @@ func (repo *ImpressionsRepo) GetAllImpressions(ctx context.Context) ([]domain.Im
 			&impression.SiteKey,
 			&impression.StartedUtc,
 			&impression.CompletedUtc)
+		impression.IpAddress = ip.String()
 
 		if err != nil {
-		fmt.Println("line 110 in error")//can't scan into dest[1]: cannot scan inet (OID 869) in binary format into *s
-
 			return nil, err
 		}
 
@@ -117,6 +114,5 @@ func (repo *ImpressionsRepo) GetAllImpressions(ctx context.Context) ([]domain.Im
 
 	err = rows.Err() // get error from rows.Next() or rows.Scan()
 
-	fmt.Println("Impression count", len(impressions))
 	return impressions, err
 }

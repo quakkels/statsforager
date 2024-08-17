@@ -87,7 +87,6 @@ func (manager *ImpressionsManager) ValidateImpression(
 
 	isSiteKeyUuid := true
 	if err := uuid.Validate(impression.SiteKey); err != nil {
-		fmt.Println("impression.SiteKey", impression.SiteKey)
 		messages["SiteKey"] = notUuid
 		isSiteKeyUuid = false
 	}
@@ -103,12 +102,10 @@ func (manager *ImpressionsManager) ValidateImpression(
 	if impression.Location == "" {
 		messages["Location"] = emptyOrMissing
 	} else if isSiteKeyUuid {
-		fmt.Println("SiteKey is a uuid")
 		site, err := manager.SitesRepo.GetSite(context, impression.SiteKey)
 		if err != nil {
 			return nil, err
 		}
-		fmt.Println("Site.domain is", site.Domain)
 		if !site.HasLocation(impression.Location) {
 			messages["Location"] = fmt.Sprint(
 				impression.Location,
@@ -133,6 +130,5 @@ func (manager *ImpressionsManager) ValidateImpression(
 }
 
 func (manager *ImpressionsManager) GetAllImpressions(ctx context.Context) ([]Impression, error) {
-	fmt.Println("In manager.GetAllImpressions")
 	return manager.ImpressionsRepo.GetAllImpressions(ctx)
 }
