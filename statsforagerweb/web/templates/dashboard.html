@@ -8,7 +8,21 @@
 		</tr>
 		{{range .Sites}}<tr><td>{{ .Domain }}</td></tr>{{else}}<tr><td>no rows</td></tr>{{end}}
 	</table>
-	
+	<h2>Location Counts</h2>	
+	<table>
+		<tr>
+			<th>Location</th>
+			<th>Count</th>
+		</tr>{{ range $key, $value := .LocationCount }}
+		<tr>
+			<td>{{$key}}</td>
+			<td>{{$value}}</td>
+		</tr>{{else}}
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>{{end}}
+	</table>
 	<h2>Impressions</h2>
 	<table>
 		<tr>

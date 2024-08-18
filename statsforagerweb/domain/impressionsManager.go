@@ -29,6 +29,7 @@ type Impression struct {
 type ImpressionsRepository interface {
 	SaveImpression(context.Context, Impression) error
 	GetAllImpressions(context.Context) ([]Impression, error)
+	GetLocationCount(context.Context, string) (map[string]int, error)
 }
 
 func NewImpressionsManager(
@@ -131,4 +132,8 @@ func (manager *ImpressionsManager) ValidateImpression(
 
 func (manager *ImpressionsManager) GetAllImpressions(ctx context.Context) ([]Impression, error) {
 	return manager.ImpressionsRepo.GetAllImpressions(ctx)
+}
+
+func (manager *ImpressionsManager) GetLocationCounts(ctx context.Context, siteKey string) (map[string]int, error) {
+	return manager.ImpressionsRepo.GetLocationCount(ctx, siteKey)
 }

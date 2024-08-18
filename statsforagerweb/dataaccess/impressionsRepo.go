@@ -116,3 +116,30 @@ func (repo *ImpressionsRepo) GetAllImpressions(ctx context.Context) ([]domain.Im
 
 	return impressions, err
 }
+
+func (repo *ImpressionsRepo) GetLocationCount(ctx context.Context, siteKey string) (map[string]int, error) {
+	var locationCounts = make(map[string]int)
+	const sql = "select count(1), location from impressions where site_key = $1 group by location;"
+
+	rows, err := repo.dataStore.Query(ctx, sql, siteKey)
+	defer rows.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	for rows.Next() {
+		var count int
+		var location string
+		err := rows.Scan(&count, &location)
+		if err != nil {
+			return nil, err
+		}
+		locationCounts[location] = count
+	}
+
+	if err != nil {
+		return nil, err
+	}
+
+	return locationCounts, nil
+}

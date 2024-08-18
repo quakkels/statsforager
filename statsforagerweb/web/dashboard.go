@@ -21,12 +21,19 @@ func getDashboardHandler(
 			fmt.Println(err)
 		}
 
+		locationCount, err := impressionsManager.GetLocationCounts(r.Context(), sites[0].SiteKey)
+		if err != nil {
+			fmt.Println(err)
+		}
+
 		model := struct {
-			Sites       []domain.Site
-			Impressions []domain.Impression
+			Sites         []domain.Site
+			Impressions   []domain.Impression
+			LocationCount map[string]int
 		}{
-			Sites:       sites,
-			Impressions: impressions,
+			Sites:         sites,
+			Impressions:   impressions,
+			LocationCount: locationCount,
 		}
 
 		if err := tpl["dashboard"].Execute(w, model); err != nil {
