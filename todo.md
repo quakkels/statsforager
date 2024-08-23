@@ -5,15 +5,15 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- dashboard page + template
+- registration
 
 ### Needs doing
 - API connect to database from docker container
-- registration
 - login
 - Getting Started (probably on landing page)
 
 ### Done
+- dashboard page + template
 - landing page route + template
 - forager site template (main template with support for partials, and place to put custom template functions)
 - serve static files for client css and scripts
