@@ -2,8 +2,12 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"log"
 	"net/http"
+	"os/signal"
+	"syscall"
 
 	"statsforagerweb/dataaccess"
 	"statsforagerweb/domain"
@@ -61,10 +65,23 @@ func main() {
 		Addr:    ":8000",
 		Handler: middlewareStack(mux),
 	}
-	fmt.Println("---about to listen and serve")
-	err = server.ListenAndServe()
-	fmt.Println("---after listening and serving")
-	if err != nil {
-		fmt.Println(err)
+
+	// reference: https://dev.to/antonkuklin/golang-graceful-shutdown-3n6d
+	// may need to revisit and add WaitGroups as services are added.
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
+
+	go func() {
+		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatalf("listen and serve returned err: %v", err)
+		}
+	}()
+
+	<-ctx.Done()
+	log.Println("got interruption signal")
+	if err := server.Shutdown(context.TODO()); err != nil {
+		log.Printf("server shutdown returned an err: %v\n", err)
 	}
+
+	log.Println("final")
 }
