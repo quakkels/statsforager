@@ -8,6 +8,9 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - registration
 
 ### Needs doing
+- add charts to dashboard
+- add user ip count to dashboard
+- add referrer count
 - API connect to database from docker container
 - login
 - Getting Started (probably on landing page)
