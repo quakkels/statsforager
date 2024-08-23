@@ -1,5 +1,7 @@
-{{ define "head" }}<title>StatsForager.com</title>{{ end }}
-{{ define "main" }}<section class="masthead">
+{{ template "_tophead.html" . }}
+<title>StatsForager.com -- website analytics. De-google your site.</title>
+{{ template "_topbody.html" . }}
+<section class="masthead">
 	<div class="gutter">
 		<img src="/static/images/ftchart.svg" width="33vw">
 	</div>
@@ -44,4 +46,4 @@
 		</div>
 	</div>
 </section>
-{{ end }}
+{{ template "_bottom.html" . }}

@@ -1,13 +1,16 @@
-{{ define "head" }}<title>StatsForager.com</title>{{ end }}
-{{ define "main" }}<section class="region row">
+{{ template "_tophead.html" . }}
+<title>StatsForager.com</title>
+{{ template "_topbody.html" . }}
+<section class="region row">
 	<form class="center-self card">
 		<div class="frame">
 			<h1>We need your email to get started</h1>
+			<p>Count: {{ .Count }}
 			<p>
 				<input placeholder="Email" type="email" id="email" name="email" style="width:100%">
 			</p>
 			<p>
-				<button type="submit">Sign Up</button>
+				<button hx-post="/register" type="submit">Sign Up</button>
 			</p>
 			<p>
 				We will never sell your email address information.
@@ -15,5 +18,5 @@
 			</p>
 		</div>
 	</form>
-</section>{{ end }}
-
+</section>
+{{ template "_bottom.html" . }}

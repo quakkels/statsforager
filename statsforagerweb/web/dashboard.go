@@ -36,8 +36,9 @@ func getDashboardHandler(
 			LocationCount: locationCount,
 		}
 
-		if err := tpl["dashboard"].Execute(w, model); err != nil {
+		if err := tplGlob.ExecuteTemplate(w, "dashboard.html", model); err != nil {
 			fmt.Println(err)
+			http.Error(w, err.Error(), 500)
 		}
 	}
 }

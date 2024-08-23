@@ -1,6 +1,7 @@
 package web
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -17,6 +18,9 @@ func getHomeHandler() func(http.ResponseWriter, *http.Request) {
 			Content: "Welcome to StatsForager",
 		}
 
-		tpl["home"].Execute(w, model)
+		if err := tplGlob.ExecuteTemplate(w, "home.html", model); err != nil {
+			fmt.Println(err)
+			http.Error(w, err.Error(), 500)
+		}
 	}
 }

@@ -1,5 +1,6 @@
-{{ define "head" }}<title>StatsForager.com</title>{{ end }}
-{{ define "main" }}
+{{ template "_tophead.html" . }}
+<title>TEST</title>
+{{ template "_topbody.html" . }}
 <section>
 	<h2>Sites</h2>
 	<table>
@@ -54,5 +55,4 @@
 		</tr>{{end}}
 	</table>
 </section>
-{{ end }}
-
+{{ template "_bottom.html" . }}

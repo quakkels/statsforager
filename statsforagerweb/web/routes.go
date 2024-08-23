@@ -34,5 +34,6 @@ func RegisterRoutes(
 	mux.HandleFunc("GET /dashboard", getDashboardHandler(sitesManager, impressionsManager))
 	mux.HandleFunc("GET /health", healthHandler(appInfo, statsdatastore))
 	mux.HandleFunc("GET /register", getRegisterHandler())
+	mux.HandleFunc("POST /register", postRegisterHandler())
 	mux.HandleFunc("GET /", getHomeHandler())
 }
