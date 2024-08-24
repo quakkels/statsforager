@@ -1,22 +1,43 @@
 {{ template "_tophead.html" . }}
-<title>StatsForager.com</title>
+<title>StatsForager.com - Register</title>
 {{ template "_topbody.html" . }}
 <section class="region row">
-	<form class="center-self card">
+	<div id="form" class="center-self card">
+		{{ if .IsPostSuccess }}
 		<div class="frame">
-			<h1>We need your email to get started</h1>
-			<p>Count: {{ .Count }}
+			<h1>Thank you for registering</h1>
 			<p>
-				<input placeholder="Email" type="email" id="email" name="email" style="width:100%">
-			</p>
-			<p>
-				<button hx-post="/register" type="submit">Sign Up</button>
-			</p>
-			<p>
-				We will never sell your email address information.
-				After registering, check your inbox for a magic link to access your StatsForager dashboard.
+				Please <a href="/login">to continue to your account</a>.
 			</p>
 		</div>
-	</form>
+		{{ else }}
+		<form 
+			method="post" 
+			action="/register"
+			hx-post="/register"
+			hx-target="body">
+			<div class="frame">
+			<h1>We need your email to get started</h1>
+				<p>
+					<input autofocus required placeholder="Email" type="email" id="email" name="email" style="width:100%" value="{{ .Email }}">
+				</p>
+				<p>
+					<button type="submit">Sign Up</button>
+				</p>
+				<p>
+					We will never sell your email address information.
+					After registering, check your inbox for a magic link to access your StatsForager dashboard.
+				</p>
+				{{ if .Errors }}
+				<ul class="errors">
+					{{ range .Errors }}
+					<li>{{ . }}</li>
+					{{ end }}
+				</ul>
+				{{ end }}
+			</div>
+		</form>
+		{{ end }}
+	</div>
 </section>
 {{ template "_bottom.html" . }}

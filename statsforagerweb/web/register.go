@@ -5,17 +5,15 @@ import (
 	"net/http"
 )
 
-var count = 1
+type registerModel struct {
+	Email string
+	IsPostSuccess bool
+	Errors []string
+}
 
 func getRegisterHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		model := struct {
-			Email string
-			Count int
-		}{
-			Email: "here",
-			Count: count,
-		}
+		model := registerModel{}
 
 		if err := tplGlob.ExecuteTemplate(w, "register.html", model); err != nil {
 			fmt.Println(err)
@@ -26,14 +24,11 @@ func getRegisterHandler() func(http.ResponseWriter, *http.Request) {
 
 func postRegisterHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		count++
 
-		model := struct {
-			Email string
-			Count int
-		}{
-			Email: "here",
-			Count: count,
+		model := registerModel{
+			Email: r.Form.Get("Email"),
+			Errors: []string{"This is the first error.", "Second error.", "Third error right here."},
+			IsPostSuccess: false,
 		}
 
 		if err := tplGlob.ExecuteTemplate(w, "register.html", model); err != nil {
