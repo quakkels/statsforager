@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os/signal"
 	"syscall"
+	"github.com/joho/godotenv"
 
 	"statsforagerweb/dataaccess"
 	"statsforagerweb/domain"
@@ -23,6 +24,8 @@ var (
 
 func main() {
 	appInfo := web.AppInfo{Version: Version, BuildDate: BuildDate, Hash: Hash}
+
+	// godotenv.Exec
 
 	const (
 		host     = "localhost"
