@@ -2,7 +2,7 @@
 <title>StatsForager.com - Register</title>
 {{ template "_topbody.html" . }}
 <section class="region row">
-	<div id="form" class="center-self card">
+	<div id="form" class="center-self card" style="min-width: 372px;">
 		{{ if .IsPostSuccess }}
 		<div class="frame">
 			<h1>Thank you for registering</h1>
@@ -17,24 +17,24 @@
 			hx-post="/register"
 			hx-target="body">
 			<div class="frame">
-			<h1>We need your email to get started</h1>
+				<h1>We need your email to get started</h1>
 				<p>
 					<input autofocus required placeholder="Email" type="email" id="email" name="email" style="width:100%" value="{{ .Email }}">
 				</p>
 				<p>
 					<button type="submit">Sign Up</button>
 				</p>
-				<p>
-					We will never sell your email address information.
-					After registering, check your inbox for a magic link to access your StatsForager dashboard.
-				</p>
 				{{ if .Errors }}
-				<ul class="errors">
+				<ul class="error">
 					{{ range .Errors }}
 					<li>{{ . }}</li>
 					{{ end }}
 				</ul>
 				{{ end }}
+				<p>
+					We will never sell your email address information.
+					After registering, check your inbox for a magic link to access your StatsForager dashboard.
+				</p>
 			</div>
 		</form>
 		{{ end }}
