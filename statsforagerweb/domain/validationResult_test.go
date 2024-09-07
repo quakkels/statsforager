@@ -47,3 +47,9 @@ func TestNewValidationResultFailsWithMessages(t *testing.T) {
 		t.Fatal("Expected 'FailMessage' but got: ", result.Messages["PropertyName"])
 	}
 }
+
+func TestToMessageSliceSucceedsWhenMissingMessages(t *testing.T) {
+	results := domain.NewValidationResult(make(map[string]string))
+
+	results.ToMessagesSlice()
+}

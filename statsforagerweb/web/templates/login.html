@@ -1,0 +1,39 @@
+{{ template "_tophead.html" . }}
+<title>StatsForager.com - Log in</title>
+{{ template "_topbody.html" . }}
+<section class="region row">
+	<div id="form" class="center-self card" style="min-width: 372px;">
+		{{ if .IsPostSuccess }}
+		<div class="frame">
+			<h1>Check email</h1>
+			<p>
+				A login link has been emailed to you. Please follow that link to finish logging in.
+			</p>
+		</div>
+		{{ else }}
+		<form 
+			method="post" 
+			action="/login"
+			hx-post="/login"
+			hx-target="body">
+			<div class="frame">
+				<h1>Log in to StatsForager</h1>
+				<p>
+					<input autofocus placeholder="Email" type="email" id="email" name="email" style="width:100%" value="{{ .Email }}">
+				</p>
+				<p>
+					<button type="submit">Log In</button>
+				</p>
+				{{ if .Errors }}
+				<ul class="error">
+					{{ range .Errors }}
+					<li>{{ . }}</li>
+					{{ end }}
+				</ul>
+				{{ end }}
+			</div>
+		</form>
+		{{ end }}
+	</div>
+</section>
+{{ template "_bottom.html" . }}

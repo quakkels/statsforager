@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"os/signal"
 	"syscall"
+
 	"github.com/joho/godotenv"
 
 	"statsforagerweb/dataaccess"
@@ -25,19 +27,22 @@ var (
 func main() {
 	appInfo := web.AppInfo{Version: Version, BuildDate: BuildDate, Hash: Hash}
 
-	// godotenv.Exec
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println(err)
+	}
 
-	const (
-		host     = "localhost"
-		port     = 5432
-		user     = "postgres"
-		password = "postgres"
-		dbname   = "stats"
+	var (
+		postgresHost     = os.Getenv("postgres_host")
+		postgresPort     = os.Getenv("postgres_port")
+		postgresUser     = os.Getenv("postgres_user")
+		postgresPassword = os.Getenv("postgres_password")
+		postgresDbname   = os.Getenv("postgres_dbname")
 	)
 
-	connString := fmt.Sprintf("host=%s port=%d user=%s "+
+	connString := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
+		postgresHost, postgresPort, postgresUser, postgresPassword, postgresDbname)
 
 	statsDataStore, err := dataaccess.NewStatsDataStore(context.Background(), connString)
 	if err != nil {
@@ -45,12 +50,41 @@ func main() {
 	}
 	defer statsDataStore.Close()
 
+	// data
 	impressionsRepo := dataaccess.NewImpressionsRepo(*statsDataStore)
 	sitesRepo := dataaccess.NewSitesRepo(*statsDataStore)
+	accountsRepo := dataaccess.NewAccountsRepo(*statsDataStore)
+
+	// business domain
+	mail, err := domain.NewMail(
+		domain.SmtpConfig{
+			User:     os.Getenv("smtp_user"),
+			From:     os.Getenv("smtp_from"),
+			Password: os.Getenv("smtp_password"),
+			Host:     os.Getenv("smtp_host"),
+			Port:     os.Getenv("smtp_port"),
+		},
+	)
+	if err != nil {
+		panic(err)
+	}
+
 	impressionsManager := domain.NewImpressionsManager(
 		&impressionsRepo,
 		&sitesRepo)
 	sitesManager := domain.NewSitesManager(&sitesRepo)
+	accountsManager := domain.NewAccountsManager(
+		domain.AccountsConfig{
+			AppRoot: os.Getenv("app_root"),
+		},
+		&accountsRepo,
+		mail,
+	)
+
+	// web
+	middlewareStack := middleware.CreateStack(
+		middleware.Logging,
+	)
 
 	mux := http.NewServeMux()
 	web.RegisterRoutes(
@@ -58,11 +92,8 @@ func main() {
 		appInfo,
 		statsDataStore,
 		impressionsManager,
-		sitesManager)
-
-	middlewareStack := middleware.CreateStack(
-		middleware.Logging,
-	)
+		sitesManager,
+		accountsManager)
 
 	server := http.Server{
 		Addr:    ":8000",

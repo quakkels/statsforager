@@ -26,14 +26,17 @@ func RegisterRoutes(
 	appInfo AppInfo,
 	statsdatastore StatsDataStore,
 	impressionsManager domain.ImpressionsManager,
-	sitesManager domain.SitesManager) {
+	sitesManager domain.SitesManager,
+	accountsManager domain.AccountsManager) {
 	// routes
 	mux.Handle("GET /static/", http.FileServerFS(staticFs))
 	mux.HandleFunc("PUT /api/sites/{siteKey}/impressions/{impressionId}", putImpressionHandler(impressionsManager))
 	mux.HandleFunc("OPTIONS /api/sites/{siteKey}/impressions/{impressionId}", optionsCorsHandler())
 	mux.HandleFunc("GET /dashboard", getDashboardHandler(sitesManager, impressionsManager))
 	mux.HandleFunc("GET /health", healthHandler(appInfo, statsdatastore))
+	mux.HandleFunc("GET /login", getLoginHandler())
+	mux.HandleFunc("POST /login", postLoginHandler(accountsManager))
 	mux.HandleFunc("GET /register", getRegisterHandler())
-	mux.HandleFunc("POST /register", postRegisterHandler())
+	mux.HandleFunc("POST /register", postRegisterHandler(accountsManager))
 	mux.HandleFunc("GET /", getHomeHandler())
 }

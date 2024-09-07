@@ -15,3 +15,11 @@ func NewValidationResult(messages map[string]string) *validationResult {
 	vr.Messages = messages
 	return vr
 }
+
+func (result *validationResult) ToMessagesSlice() []string {
+	var messages []string
+	for _, item := range result.Messages {
+		messages = append(messages, item)
+	}
+	return messages
+}

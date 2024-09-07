@@ -5,17 +5,18 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- registration
+- user session (scs)
+- registration + login
 
 ### Needs doing
 - add charts to dashboard
 - add user ip count to dashboard
 - add referrer count
 - API connect to database from docker container
-- login
 - Getting Started (probably on landing page)
 
 ### Done
+- send email function
 - dashboard page + template
 - landing page route + template
 - forager site template (main template with support for partials, and place to put custom template functions)
