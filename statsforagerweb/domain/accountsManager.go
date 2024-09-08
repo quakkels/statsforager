@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/mail"
+	"net/url"
 	"strings"
 )
 
@@ -61,27 +62,36 @@ func (manager *AccountsManager) RegisterEmail(context context.Context, email str
 	return validationResult, nil
 }
 
-func (manager *AccountsManager) SendLoginMail(context context.Context, email string) error {
+func (manager *AccountsManager) SendLoginMail(
+	context context.Context,
+	email string,
+	otp string,
+) (validationResult, error) {
+	var validationResult validationResult
+	if len(email) == 0 {
+		errors := make(map[string]string)
+		errors["email"] = "Missing email"
+		return *NewValidationResult(errors), nil
+	}
 	account, err := manager.accountsRepo.GetAccountByEmail(context, email)
 	if err != nil {
 		fmt.Println("GetAccountByEmail")
 		fmt.Println(err)
-		return err
+		return validationResult, err
 	}
 
 	if account.Email != strings.ToLower(email) {
 		fmt.Println(
-			"account.Email:",account.Email+
-			"\nstrings.ToLower(email):",strings.ToLower(email))
+			"account.Email:", account.Email+
+				"\nstrings.ToLower(email):", strings.ToLower(email))
 		fmt.Println("emails don't match")
-		return nil
+		return validationResult, nil
 	}
 
 	err = manager.mail.SendMailWithTls(
-		account.Email, 
-		"Subject", 
-		"Login to StatsForager by following this link:\r\n\r\n\t" + manager.config.AppRoot + "\r\nThank you,\r\nStatsForager")
+		account.Email,
+		"StatsForager Login Confirmation",
+		"Complete your passwordless log in to StatsForager by following this link:\r\n\r\n\t"+manager.config.AppRoot+"/login/confirm/"+url.PathEscape(otp)+"\r\nThank you,\r\nStatsForager")
 
-	return err
+	return validationResult, err
 }
-

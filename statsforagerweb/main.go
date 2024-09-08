@@ -9,7 +9,9 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
+	"github.com/alexedwards/scs/v2"
 	"github.com/joho/godotenv"
 
 	"statsforagerweb/dataaccess"
@@ -40,17 +42,16 @@ func main() {
 		postgresDbname   = os.Getenv("postgres_dbname")
 	)
 
+	// data
 	connString := fmt.Sprintf("host=%s port=%s user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		postgresHost, postgresPort, postgresUser, postgresPassword, postgresDbname)
-
 	statsDataStore, err := dataaccess.NewStatsDataStore(context.Background(), connString)
 	if err != nil {
 		panic(err)
 	}
 	defer statsDataStore.Close()
 
-	// data
 	impressionsRepo := dataaccess.NewImpressionsRepo(*statsDataStore)
 	sitesRepo := dataaccess.NewSitesRepo(*statsDataStore)
 	accountsRepo := dataaccess.NewAccountsRepo(*statsDataStore)
@@ -82,7 +83,11 @@ func main() {
 	)
 
 	// web
+	sessionManager := scs.New()
+	sessionManager.Lifetime = 24 * time.Hour
+
 	middlewareStack := middleware.CreateStack(
+		sessionManager.LoadAndSave,
 		middleware.Logging,
 	)
 
@@ -93,7 +98,9 @@ func main() {
 		statsDataStore,
 		impressionsManager,
 		sitesManager,
-		accountsManager)
+		accountsManager,
+		sessionManager,
+	)
 
 	server := http.Server{
 		Addr:    ":8000",
