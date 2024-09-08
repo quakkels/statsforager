@@ -67,7 +67,7 @@ func (manager *AccountsManager) SendLoginMail(
 	email string,
 	otp string,
 ) (validationResult, error) {
-	var validationResult validationResult
+	successResult := *NewValidationResult(nil)
 	if len(email) == 0 {
 		errors := make(map[string]string)
 		errors["email"] = "Missing email"
@@ -77,7 +77,7 @@ func (manager *AccountsManager) SendLoginMail(
 	if err != nil {
 		fmt.Println("GetAccountByEmail")
 		fmt.Println(err)
-		return validationResult, err
+		return successResult, err // return success to avoid leaking account info
 	}
 
 	if account.Email != strings.ToLower(email) {
@@ -85,13 +85,13 @@ func (manager *AccountsManager) SendLoginMail(
 			"account.Email:", account.Email+
 				"\nstrings.ToLower(email):", strings.ToLower(email))
 		fmt.Println("emails don't match")
-		return validationResult, nil
+		return successResult, nil // return success to avoid leaking account info... todo: may be unreachable code
 	}
 
-	err = manager.mail.SendMailWithTls(
+	go manager.mail.SendMailWithTls(
 		account.Email,
 		"StatsForager Login Confirmation",
 		"Complete your passwordless log in to StatsForager by following this link:\r\n\r\n\t"+manager.config.AppRoot+"/login/confirm/"+url.PathEscape(otp)+"\r\nThank you,\r\nStatsForager")
 
-	return validationResult, err
+	return successResult, err
 }

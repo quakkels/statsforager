@@ -42,7 +42,7 @@ func NewMail(config SmtpConfig) (Mail, error) {
 	return Mail{config: config}, nil
 }
 
-func (mail *Mail) SendMailWithTls(to, subject, body string) error {
+func (mail *Mail) SendMailWithTls(to, subject, body string) {
 	message := []byte("To: " + to + "\r\n" +
 		"From: StatsForager <" + mail.config.From + ">\r\n" +
 		"Subject: " + subject + "\r\n" +
@@ -65,45 +65,52 @@ func (mail *Mail) SendMailWithTls(to, subject, body string) error {
 
 	connection, err := tls.Dial("tcp", mail.config.Host+":"+mail.config.Port, tlsConfig)
 	if err != nil {
-		return err
+		fmt.Println("SendMailWithTls error:", err)
+		return
 	}
 
 	smtpClient, err := smtp.NewClient(connection, mail.config.Host)
 	if err != nil {
-		return err
+		fmt.Println("SendMailWithTls error:", err)
+		return
 	}
 
 	if err = smtpClient.Auth(auth); err != nil {
-		return err
+		fmt.Println("SendMailWithTls error:", err)
+		return
 	}
 
 	if err = smtpClient.Mail(mail.config.From); err != nil {
-		return err
+		fmt.Println("SendMailWithTls error:", err)
+		return
 	}
 
 	if err = smtpClient.Rcpt(to); err != nil {
-		return err
+		fmt.Println("SendMailWithTls error:", err)
+		return
 	}
 
 	writer, err := smtpClient.Data()
 	if err != nil {
-		return err
+		fmt.Println("SendMailWithTls error:", err)
+		return
 	}
 
 	_, err = writer.Write([]byte(message))
 	if err != nil {
-		return err
+		fmt.Println("SendMailWithTls error:", err)
+		return
 	}
 
 	err = writer.Close()
 	if err != nil {
-		return err
+		fmt.Println("SendMailWithTls error:", err)
+		return
 	}
 
 	err = smtpClient.Quit()
 	if err != nil {
-		return err
+		fmt.Println("SendMailWithTls error:", err)
+		return
 	}
-
-	return nil
 }

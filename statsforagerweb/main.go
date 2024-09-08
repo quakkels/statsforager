@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/gob"
 	"errors"
 	"fmt"
 	"log"
@@ -83,6 +84,7 @@ func main() {
 	)
 
 	// web
+	gob.Register(domain.OtpToken{}) // scs requires custom types to be registered in gob
 	sessionManager := scs.New()
 	sessionManager.Lifetime = 24 * time.Hour
 

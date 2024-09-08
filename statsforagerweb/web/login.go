@@ -33,7 +33,7 @@ func postLoginHandler(accountsManager domain.AccountsManager, sessionManager *sc
 			Email: r.Form.Get("email"),
 		}
 
-		otp, err := domain.NewOtpToken(10 * time.Minute)
+		otp, err := domain.NewOtpToken(model.Email, 10*time.Minute)
 		if err != nil {
 			fmt.Println(err)
 			http.Error(w, err.Error(), 500)
@@ -46,10 +46,11 @@ func postLoginHandler(accountsManager domain.AccountsManager, sessionManager *sc
 		}
 
 		model.IsPostSuccess = validation.IsSuccess
+		fmt.Println("model.IsPostSuccess:", model.IsPostSuccess)
 		model.Errors = validation.ToMessagesSlice()
 
 		if err := tplGlob.ExecuteTemplate(w, "login.html", model); err != nil {
-			fmt.Println(err)
+			fmt.Println("tplGlob.ExecuteTemplate error:", err)
 			http.Error(w, err.Error(), 500)
 		}
 	}
@@ -68,12 +69,16 @@ func getLoginConfirmHandler(
 		loginOtp := sessionManager.Get(r.Context(), "LoginOtp").(domain.OtpToken)
 		if loginOtp.IsValid(suggestedOtp) {
 			sessionManager.RenewToken(r.Context()) // prevent session fixation
-			// save authenticated user claims
-			// redirect to dashboard
+			sessionManager.Put(r.Context(), "AuthenticatedAccountCode", loginOtp.AccountCode)
+			// todo: save authenticated user claims
+			http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 		}
 		model := loginModel{
 			IsPostSuccess: false,
-			Errors:        []string{"Login unsuccessful. Register your email addres, or try again."},
+			Errors: []string{
+				"Login unsuccessful.",
+				"Make sure you're using a registered email, and you follow the login link before it expires.",
+			},
 		}
 
 		if err := tplGlob.ExecuteTemplate(w, "login.html", model); err != nil {

@@ -7,8 +7,12 @@ import (
 )
 
 func TestNewOtpToken(t *testing.T) {
-	// arrange, act
-	otp, err := domain.NewOtpToken(10 * time.Millisecond)
+	// arrange
+	email := "email@example.com"
+	validFor := 10 * time.Millisecond
+
+	// act
+	otp, err := domain.NewOtpToken(email, validFor)
 
 	// assert
 	if err != nil {
@@ -24,7 +28,7 @@ func TestNewOtpToken(t *testing.T) {
 		t.Error("Otp.IsValid() check failed when it should have succeeded.")
 	}
 
-	time.Sleep(11 * time.Millisecond)
+	time.Sleep(validFor + time.Millisecond)
 	if otp.IsValid(otp.Otp) {
 		t.Error("Otp.IsValid() succeeded when it should have failed due to exceeding expiration.")
 	}
