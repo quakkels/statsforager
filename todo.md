@@ -6,6 +6,7 @@ and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
 - registration + login
+- registration & login rate limiting
 - middleware to verify authenticated user
 
 ### Needs doing
