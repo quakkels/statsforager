@@ -10,6 +10,7 @@ import (
 
 type SmtpConfig struct {
 	From, User, Host, Port, Password string
+	IsLive                           bool
 }
 
 type Mail struct {
@@ -50,7 +51,11 @@ func (mail *Mail) SendMailWithTls(to, subject, body string) {
 		"\r\n" + // Blank line separating headers from body
 		body)
 
-	fmt.Println(string(message))
+	if !mail.config.IsLive {
+		fmt.Println(string(message))
+		return
+	}
+
 	auth := smtp.PlainAuth(
 		"",
 		mail.config.User,
@@ -113,4 +118,6 @@ func (mail *Mail) SendMailWithTls(to, subject, body string) {
 		fmt.Println("SendMailWithTls error:", err)
 		return
 	}
+
+	fmt.Println("Email sent successfully")
 }

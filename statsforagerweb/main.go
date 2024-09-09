@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -58,6 +59,10 @@ func main() {
 	accountsRepo := dataaccess.NewAccountsRepo(*statsDataStore)
 
 	// business domain
+	smtpIsLive, err := strconv.ParseBool(os.Getenv("smtp_is_live"))
+	if err != nil {
+		log.Panic("smtp_is_live could not be parsed.", err)
+	}
 	mail, err := domain.NewMail(
 		domain.SmtpConfig{
 			User:     os.Getenv("smtp_user"),
@@ -65,6 +70,7 @@ func main() {
 			Password: os.Getenv("smtp_password"),
 			Host:     os.Getenv("smtp_host"),
 			Port:     os.Getenv("smtp_port"),
+			IsLive:   smtpIsLive,
 		},
 	)
 	if err != nil {
