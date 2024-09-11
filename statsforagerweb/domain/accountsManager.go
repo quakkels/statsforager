@@ -91,7 +91,7 @@ func (manager *AccountsManager) SendLoginMail(
 	go manager.mail.SendMailWithTls(
 		account.Email,
 		"StatsForager Login Confirmation",
-		"Complete your passwordless log in to StatsForager by following this link:\r\n\r\n\t"+manager.config.AppRoot+"/login/confirm/"+url.PathEscape(otp)+"\r\nThank you,\r\nStatsForager")
+		"Complete your passwordless log in to StatsForager by following this link:\r\n\r\n\t"+manager.config.AppRoot+"/login/confirm/"+url.PathEscape(otp)+"\r\n\r\nThank you,\r\nStatsForager")
 
 	return successResult, err
 }

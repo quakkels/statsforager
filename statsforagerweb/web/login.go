@@ -69,7 +69,7 @@ func getLoginConfirmHandler(
 		loginOtp := sessionManager.Get(r.Context(), "LoginOtp").(domain.OtpToken)
 		if loginOtp.IsValid(suggestedOtp) {
 			sessionManager.RenewToken(r.Context()) // prevent session fixation
-			sessionManager.Put(r.Context(), "AuthenticatedAccountCode", loginOtp.AccountCode)
+			sessionManager.Put(r.Context(), "accountCode", loginOtp.AccountCode)
 			// todo: save authenticated user claims
 			http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 		}

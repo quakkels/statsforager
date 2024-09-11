@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"statsforagerweb/domain"
+	"statsforagerweb/web/middleware"
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/jackc/pgx/v5"
@@ -35,7 +36,7 @@ func RegisterRoutes(
 	mux.Handle("GET /static/", http.FileServerFS(staticFs))
 	mux.HandleFunc("PUT /api/sites/{siteKey}/impressions/{impressionId}", putImpressionHandler(impressionsManager))
 	mux.HandleFunc("OPTIONS /api/sites/{siteKey}/impressions/{impressionId}", optionsCorsHandler())
-	mux.HandleFunc("GET /dashboard", getDashboardHandler(sitesManager, impressionsManager))
+	mux.HandleFunc("GET /dashboard", middleware.Protect(sessionManager, getDashboardHandler(sitesManager, impressionsManager)))
 	mux.HandleFunc("GET /health", healthHandler(appInfo, statsdatastore))
 	mux.HandleFunc("GET /login/confirm/{otp}", getLoginConfirmHandler(accountsManager, sessionManager))
 	mux.HandleFunc("GET /login", getLoginHandler())
