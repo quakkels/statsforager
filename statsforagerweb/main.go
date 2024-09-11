@@ -94,9 +94,12 @@ func main() {
 	sessionManager := scs.New()
 	sessionManager.Lifetime = 24 * time.Hour
 
+	ham := middleware.NewHydrateAccountMiddleware(sessionManager)
+
 	middlewareStack := middleware.CreateStack(
 		sessionManager.LoadAndSave,
 		middleware.Logging,
+		ham.Apply,
 	)
 
 	mux := http.NewServeMux()

@@ -39,3 +39,5 @@ func optionsCorsHandler() func(http.ResponseWriter, *http.Request) {
 		setupCors(w)
 	}
 }
+
+
