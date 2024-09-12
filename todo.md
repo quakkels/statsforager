@@ -5,11 +5,11 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- registration + login
 - registration & login rate limiting
-- middleware to verify authenticated user
 
 ### Needs doing
+- dashboard site select
+- dashboard create site
 - add charts to dashboard
 - add user ip count to dashboard
 - add referrer count
@@ -17,6 +17,8 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - Write "Getting Started" (probably on landing page)
 
 ### Done
+- middleware to verify authenticated user
+- registration + login
 - user session (scs)
 - send email function
 - dashboard page + template
