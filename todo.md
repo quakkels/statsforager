@@ -5,12 +5,13 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- registration & login rate limiting
+- logout and logout header
+- registration & login rate limiting (tollbooth?)
 
 ### Needs doing
 - dashboard site select
 - dashboard create site
-- add charts to dashboard
+- add charts to dashboard (apexcharts?)
 - add user ip count to dashboard
 - add referrer count
 - API connect to database from docker container
