@@ -5,7 +5,6 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- logout and logout header
 - registration & login rate limiting (tollbooth?)
 
 ### Needs doing
@@ -18,6 +17,7 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - Write "Getting Started" (probably on landing page)
 
 ### Done
+- logout and logout header
 - middleware to verify authenticated user
 - registration + login
 - user session (scs)
