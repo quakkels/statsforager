@@ -49,7 +49,6 @@ func postLoginHandler(accountsManager domain.AccountsManager, sessionManager *sc
 }
 
 func getLoginConfirmHandler(
-	_ domain.AccountsManager,
 	sessionManager *scs.SessionManager,
 ) func(http.ResponseWriter, *http.Request) {
 	return func(
@@ -62,7 +61,6 @@ func getLoginConfirmHandler(
 		if loginOtp.IsValid(suggestedOtp) {
 			sessionManager.RenewToken(r.Context()) // prevent session fixation
 			sessionManager.Put(r.Context(), "accountCode", loginOtp.AccountCode)
-			// todo: save authenticated user claims
 			http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 		}
 		model := loginModel{
@@ -73,5 +71,16 @@ func getLoginConfirmHandler(
 			},
 		}
 		render(w, r.Context(), "login.html", model)
+	}
+}
+
+func getLogoutHandler(sessionManager *scs.SessionManager) func(http.ResponseWriter, *http.Request) {
+	return func(
+		w http.ResponseWriter,
+		r *http.Request,
+	) {
+		sessionManager.Clear(r.Context())
+		sessionManager.RenewToken(r.Context())
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 }
