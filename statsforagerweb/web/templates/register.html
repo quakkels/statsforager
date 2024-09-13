@@ -3,7 +3,7 @@
 {{ template "_topbody.html" . }}
 <section class="region row">
 	<div id="form" class="center-self card" style="min-width: 372px;">
-		{{ if .IsPostSuccess }}
+		{{ if .Model.IsPostSuccess }}
 		<div class="frame">
 			<h1>Thank you for registering</h1>
 			<p>
@@ -19,14 +19,14 @@
 			<div class="frame">
 				<h1>We need your email to get started</h1>
 				<p>
-					<input autofocus required placeholder="Email" type="email" id="email" name="email" style="width:100%" value="{{ .Email }}">
+					<input autofocus placeholder="Email" type="email" id="email" name="email" style="width:100%" value="{{ .Model.Email }}">
 				</p>
 				<p>
 					<button type="submit">Sign Up</button>
 				</p>
 				{{ if .Errors }}
 				<ul class="error">
-					{{ range .Errors }}
+					{{ range .Model.Errors }}
 					<li>{{ . }}</li>
 					{{ end }}
 				</ul>

@@ -1,5 +1,5 @@
 {{ template "_tophead.html" . }}
-<title>TEST</title>
+<title>Dashboard</title>
 {{ template "_topbody.html" . }}
 <section>
 	<h2>Sites</h2>
@@ -7,14 +7,14 @@
 		<tr>
 		<th>Domain</th>
 		</tr>
-		{{range .Sites}}<tr><td>{{ .Domain }}</td></tr>{{else}}<tr><td>no rows</td></tr>{{end}}
+		{{range .Model.Sites}}<tr><td>{{ .Domain }}</td></tr>{{else}}<tr><td>no rows</td></tr>{{end}}
 	</table>
 	<h2>Location Counts</h2>	
 	<table>
 		<tr>
 			<th>Location</th>
 			<th>Count</th>
-		</tr>{{ range $key, $value := .LocationCount }}
+		</tr>{{ range $key, $value := .Model.LocationCount }}
 		<tr>
 			<td>{{$key}}</td>
 			<td>{{$value}}</td>
@@ -38,7 +38,7 @@
 		<th>Created</th>
 		<th>Started</th>
 		<th>Completed</th>
-		</tr>{{range .Impressions}}
+		</tr>{{range .Model.Impressions}}
 		<tr>
 			<td>{{ .ImpressionId }}</td>
 			<td>{{ .IpAddress }}</td>

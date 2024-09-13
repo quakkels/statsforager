@@ -1,8 +1,10 @@
 package web
 
 import (
+	"context"
 	"embed"
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -40,4 +42,20 @@ func optionsCorsHandler() func(http.ResponseWriter, *http.Request) {
 	}
 }
 
+type modelWrapper struct {
+	AccountCode string
+	Model any
+}
+func render(w http.ResponseWriter, context context.Context, templateName string, model any) {
+	modelWrapper := modelWrapper{Model: model}
 
+	accountCode, ok := context.Value("accountCode").(string)
+	if ok {
+		modelWrapper.AccountCode = accountCode
+	}
+
+	if err := tplGlob.ExecuteTemplate(w, templateName, modelWrapper); err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), 500)
+	}
+}

@@ -35,10 +35,6 @@ func getDashboardHandler(
 			Impressions:   impressions,
 			LocationCount: locationCount,
 		}
-
-		if err := tplGlob.ExecuteTemplate(w, "dashboard.html", model); err != nil {
-			fmt.Println(err)
-			http.Error(w, err.Error(), 500)
-		}
+		render(w, r.Context(), "dashboard.html", model)
 	}
 }

@@ -18,11 +18,7 @@ type loginModel struct {
 func getLoginHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		model := loginModel{}
-
-		if err := tplGlob.ExecuteTemplate(w, "login.html", model); err != nil {
-			fmt.Println(err)
-			http.Error(w, err.Error(), 500)
-		}
+		render(w, r.Context(), "login.html", model)
 	}
 }
 
@@ -48,11 +44,7 @@ func postLoginHandler(accountsManager domain.AccountsManager, sessionManager *sc
 		model.IsPostSuccess = validation.IsSuccess
 		fmt.Println("model.IsPostSuccess:", model.IsPostSuccess)
 		model.Errors = validation.ToMessagesSlice()
-
-		if err := tplGlob.ExecuteTemplate(w, "login.html", model); err != nil {
-			fmt.Println("tplGlob.ExecuteTemplate error:", err)
-			http.Error(w, err.Error(), 500)
-		}
+		render(w, r.Context(), "login.html", model)
 	}
 }
 
@@ -80,10 +72,6 @@ func getLoginConfirmHandler(
 				"Make sure you're using a registered email, and you follow the login link before it expires.",
 			},
 		}
-
-		if err := tplGlob.ExecuteTemplate(w, "login.html", model); err != nil {
-			fmt.Println(err)
-			http.Error(w, err.Error(), 500)
-		}
+		render(w, r.Context(), "login.html", model)
 	}
 }

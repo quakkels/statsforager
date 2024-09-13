@@ -1,7 +1,6 @@
 package web
 
 import (
-	"fmt"
 	"net/http"
 	"statsforagerweb/domain"
 )
@@ -15,11 +14,7 @@ type registerModel struct {
 func getRegisterHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		model := registerModel{}
-
-		if err := tplGlob.ExecuteTemplate(w, "register.html", model); err != nil {
-			fmt.Println(err)
-			http.Error(w, err.Error(), 500)
-		}
+		render(w, r.Context(), "register.html", model)
 	}
 }
 
@@ -37,10 +32,6 @@ func postRegisterHandler(accountsManager domain.AccountsManager) func(http.Respo
 
 		model.IsPostSuccess = validationResult.IsSuccess
 		model.Errors = validationResult.ToMessagesSlice()
-
-		if err := tplGlob.ExecuteTemplate(w, "register.html", model); err != nil {
-			fmt.Println(err)
-			http.Error(w, err.Error(), 500)
-		}
+		render(w, r.Context(), "register.html", model)
 	}
 }

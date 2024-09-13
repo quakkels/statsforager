@@ -4,8 +4,12 @@
 				<a class="button transparent" href="/" hx-get="/" hx-target="body" hx-push-url="true">
 					StatsForager</a>
 				<a class="button" href="/dashboard" hx-get="/dashboard" hx-target="body" hx-push-url="true">Dashboard</a>
+				{{ if .AccountCode }}
+				<a class="button" href="/logout" hx-get="/logout" hx-target="body" hx-push-url="true">Logout</a>
+				{{ else }}
 				<a class="button" href="/login" hx-get="/login" hx-target="body" hx-push-url="true">Login</a>
 				<a class="button" href="/register"hx-get="/register" hx-target="body" hx-push-url="true">Register</a>
+				{{ end }}
 			</nav>
 		</header>
 		<main>
