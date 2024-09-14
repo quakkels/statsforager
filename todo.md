@@ -5,6 +5,7 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
+- csrf
 - registration & login rate limiting (tollbooth?)
 
 ### Needs doing
