@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/signal"
 	"strconv"
+	"strings"
 	"syscall"
 	"time"
 
@@ -93,6 +94,9 @@ func main() {
 	gob.Register(domain.OtpToken{}) // scs requires custom types to be registered in gob
 	sessionManager := scs.New()
 	sessionManager.Lifetime = 24 * time.Hour
+	sessionManager.Cookie.HttpOnly = true
+	sessionManager.Cookie.SameSite = http.SameSiteStrictMode
+	sessionManager.Cookie.Secure = strings.HasPrefix(os.Getenv("app_root"), "https://")
 
 	ham := middleware.NewHydrateAccountMiddleware(sessionManager)
 
