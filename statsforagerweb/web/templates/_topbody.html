@@ -5,10 +5,10 @@
 					StatsForager</a>
 				<a class="button" href="/dashboard" hx-get="/dashboard" hx-target="body" hx-push-url="true">Dashboard</a>
 				{{ if .AccountCode }}
-				<a class="button" href="/logout" hx-get="/logout" hx-target="body" hx-push-url="true">Logout</a>
+				<a class="button transparent" href="/logout" hx-get="/logout" hx-target="body" hx-push-url="true">Logout {{ .AccountCode }}</a>
 				{{ else }}
-				<a class="button" href="/login" hx-get="/login" hx-target="body" hx-push-url="true">Login</a>
-				<a class="button" href="/register"hx-get="/register" hx-target="body" hx-push-url="true">Register</a>
+				<a class="button" href="/register" hx-get="/register" hx-target="body" hx-push-url="true">Sign Up</a>
+				<a class="button transparent" href="/login" hx-get="/login" hx-target="body" hx-push-url="true">Login</a>
 				{{ end }}
 			</nav>
 		</header>

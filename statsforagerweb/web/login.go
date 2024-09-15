@@ -18,7 +18,7 @@ type loginModel struct {
 func getLoginHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		model := loginModel{}
-		render(w, r.Context(), "login.html", model)
+		render(w, r, "login.html", model)
 	}
 }
 
@@ -44,7 +44,7 @@ func postLoginHandler(accountsManager domain.AccountsManager, sessionManager *sc
 		model.IsPostSuccess = validation.IsSuccess
 		fmt.Println("model.IsPostSuccess:", model.IsPostSuccess)
 		model.Errors = validation.ToMessagesSlice()
-		render(w, r.Context(), "login.html", model)
+		render(w, r, "login.html", model)
 	}
 }
 
@@ -70,7 +70,7 @@ func getLoginConfirmHandler(
 				"Make sure you're using a registered email, and you follow the login link before it expires.",
 			},
 		}
-		render(w, r.Context(), "login.html", model)
+		render(w, r, "login.html", model)
 	}
 }
 

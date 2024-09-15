@@ -35,6 +35,6 @@ func getDashboardHandler(
 			Impressions:   impressions,
 			LocationCount: locationCount,
 		}
-		render(w, r.Context(), "dashboard.html", model)
+		render(w, r, "dashboard.html", model)
 	}
 }

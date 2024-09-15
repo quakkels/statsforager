@@ -9,12 +9,13 @@ type registerModel struct {
 	Email         string
 	IsPostSuccess bool
 	Errors        []string
+	Token         string
 }
 
 func getRegisterHandler() func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		model := registerModel{}
-		render(w, r.Context(), "register.html", model)
+		render(w, r, "register.html", model)
 	}
 }
 
@@ -32,6 +33,6 @@ func postRegisterHandler(accountsManager domain.AccountsManager) func(http.Respo
 
 		model.IsPostSuccess = validationResult.IsSuccess
 		model.Errors = validationResult.ToMessagesSlice()
-		render(w, r.Context(), "register.html", model)
+		render(w, r, "register.html", model)
 	}
 }

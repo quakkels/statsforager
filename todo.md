@@ -5,7 +5,6 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- csrf
 - registration & login rate limiting (tollbooth?)
 
 ### Needs doing
@@ -18,6 +17,7 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - Write "Getting Started" (probably on landing page)
 
 ### Done
+- csrf (nosurf)
 - logout and logout header
 - middleware to verify authenticated user
 - registration + login

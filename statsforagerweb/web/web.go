@@ -1,12 +1,13 @@
 package web
 
 import (
-	"context"
 	"embed"
 	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
+
+	"github.com/justinas/nosurf"
 )
 
 //go:embed templates/*.html
@@ -44,10 +45,22 @@ func optionsCorsHandler() func(http.ResponseWriter, *http.Request) {
 
 type modelWrapper struct {
 	AccountCode string
-	Model any
+	Token string
+	Model       any
 }
-func render(w http.ResponseWriter, context context.Context, templateName string, model any) {
-	modelWrapper := modelWrapper{Model: model}
+
+func (self *modelWrapper) CsrfInputElement() template.HTML {
+	element := "<input type='hidden' name='csrf_token' value='" + self.Token + "'>"
+	return template.HTML(element)
+}
+
+func render(w http.ResponseWriter, request *http.Request, templateName string, model any) {
+	modelWrapper := &modelWrapper{
+		Model: model,
+		Token: nosurf.Token(request),
+	}
+
+	context := request.Context()
 
 	accountCode, ok := context.Value("accountCode").(string)
 	if ok {

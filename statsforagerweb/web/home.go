@@ -16,6 +16,6 @@ func getHomeHandler() func(http.ResponseWriter, *http.Request) {
 		}{
 			Content: "Welcome to StatsForager",
 		}
-		render(w, r.Context(), "home.html", model)
+		render(w, r, "home.html", model)
 	}
 }

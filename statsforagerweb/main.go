@@ -16,6 +16,7 @@ import (
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/joho/godotenv"
+	"github.com/justinas/nosurf"
 
 	"statsforagerweb/dataaccess"
 	"statsforagerweb/domain"
@@ -101,8 +102,9 @@ func main() {
 	ham := middleware.NewHydrateAccountMiddleware(sessionManager)
 
 	middlewareStack := middleware.CreateStack(
-		sessionManager.LoadAndSave,
 		middleware.Logging,
+		nosurf.NewPure,
+		sessionManager.LoadAndSave,
 		ham.Apply,
 	)
 
