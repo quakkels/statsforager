@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
+	"github.com/didip/tollbooth"
 	"github.com/joho/godotenv"
 	"github.com/justinas/nosurf"
 
@@ -100,6 +101,10 @@ func main() {
 	sessionManager.Cookie.Secure = strings.HasPrefix(os.Getenv("app_root"), "https://")
 
 	ham := middleware.NewHydrateAccountMiddleware(sessionManager)
+
+	
+	lmt := tollbooth.NewLimiter(1, nil)
+	lmt.SetMethods([]string{"GET", "POST"})
 
 	middlewareStack := middleware.CreateStack(
 		middleware.Logging,
