@@ -18,16 +18,13 @@ func NewRateLimitingMiddleware(limiter *limiter.Limiter) RateLimitingMiddleware 
 
 func (self *RateLimitingMiddleware) Apply(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("in rate limiter")
-
 		httpErr := tollbooth.LimitByRequest(self.limiter, w, r)
 		if httpErr != nil {
 			http.Error(w, httpErr.Message, http.StatusTooManyRequests)
+			fmt.Println("Rate limited")
 			return
 		}
 		
 		next.ServeHTTP(w, r)
-
-		fmt.Println("leaving rate limiter")
 	})
 }

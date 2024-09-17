@@ -104,7 +104,7 @@ func main() {
 	ham := middleware.NewHydrateAccountMiddleware(sessionManager)
 
 	limiter := tollbooth.NewLimiter(1, &limiter.ExpirableOptions{DefaultExpirationTTL: 10 * time.Second})
-	limiter.SetMethods([]string{"POST","GET"})
+	limiter.SetMethods([]string{"POST"})
 	rlm := middleware.NewRateLimitingMiddleware(limiter)
 
 	middlewareStack := middleware.CreateStack(

@@ -5,7 +5,6 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-- registration & login rate limiting (tollbooth?)
 
 ### Needs doing
 - dashboard site select
@@ -17,6 +16,7 @@ and removes dependencies on unstrustworthy data hogs like Google.
 - Write "Getting Started" (probably on landing page)
 
 ### Done
+- registration & login rate limiting (tollbooth?)
 - csrf (nosurf)
 - logout and logout header
 - middleware to verify authenticated user
