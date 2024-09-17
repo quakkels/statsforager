@@ -22,7 +22,7 @@ func (self *RateLimitingMiddleware) Apply(next http.Handler) http.Handler {
 
 		httpErr := tollbooth.LimitByRequest(self.limiter, w, r)
 		if httpErr != nil {
-			http.Error(w, httpErr.Message, http.StatusBadRequest)
+			http.Error(w, httpErr.Message, http.StatusTooManyRequests)
 			return
 		}
 		

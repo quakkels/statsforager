@@ -16,6 +16,7 @@ import (
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/didip/tollbooth/v7"
+	"github.com/didip/tollbooth/v7/limiter"
 	"github.com/joho/godotenv"
 	"github.com/justinas/nosurf"
 
@@ -102,8 +103,8 @@ func main() {
 
 	ham := middleware.NewHydrateAccountMiddleware(sessionManager)
 
-	limiter := tollbooth.NewLimiter(1, nil)
-	limiter.SetMethods([]string{"POST"})
+	limiter := tollbooth.NewLimiter(1, &limiter.ExpirableOptions{DefaultExpirationTTL: 10 * time.Second})
+	limiter.SetMethods([]string{"POST","GET"})
 	rlm := middleware.NewRateLimitingMiddleware(limiter)
 
 	middlewareStack := middleware.CreateStack(
