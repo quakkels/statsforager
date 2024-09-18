@@ -3,10 +3,12 @@
 			<nav class="nav">
 				<a class="button transparent" href="/" hx-get="/" hx-target="body" hx-push-url="true">
 					StatsForager</a>
-				<a class="button" href="/dashboard" hx-get="/dashboard" hx-target="body" hx-push-url="true">Dashboard</a>
+				<a class="button" href="/gettingstarted" hx-get="/gettingstarted" hx-target="body" hx-push-url="true">Getting Started</a>
 				{{ if .AccountCode }}
+				<a class="button" href="/dashboard" hx-get="/dashboard" hx-target="body" hx-push-url="true">Dashboard</a>
 				<a class="button transparent" href="/logout" hx-get="/logout" hx-target="body" hx-push-url="true">Logout {{ .AccountCode }}</a>
 				{{ else }}
+				<a class="button" href="/pricing" hx-get="/pricing" hx-target="body" hx-push-url="true">Pricing</a>
 				<a class="button" href="/register" hx-get="/register" hx-target="body" hx-push-url="true">Sign Up</a>
 				<a class="button transparent" href="/login" hx-get="/login" hx-target="body" hx-push-url="true">Login</a>
 				{{ end }}
