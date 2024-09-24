@@ -1,11 +1,12 @@
 function setupStatsForager(setup) {
 	let impressionId = null;
+	let impression = null;
 	let statsForager = {
 
 		arrive: function() {
 			this.setGuid();
 			let dateUtc = this.getDateUtcNowIso();
-			let impression = {
+			impression = {
 				impressionId: impressionId,
 				userAgent: navigator.userAgent,
 				language: navigator.language,
@@ -14,7 +15,6 @@ function setupStatsForager(setup) {
 				startedUtc: dateUtc,
 				completedUtc: dateUtc
 			}
-			console.log(impression);
 			window.fetch(
 				`http://localhost:8000/api/sites/${setup.siteKey}/impressions/${impressionId}`,
 				{
@@ -28,6 +28,7 @@ function setupStatsForager(setup) {
 		},
 
 		leave: function() {
+			impression.completedUtc = this.getDateUtcNowIso();
 			window.fetch(
 				`http://localhost:8000/api/sites/${setup.siteKey}/impressions/${impressionId}`,
 				{
@@ -35,11 +36,9 @@ function setupStatsForager(setup) {
 					headers: {
 						"Content-Type": "application/json",
 					},
-					body:'{"test":"test"}'
+					body: JSON.stringify(impression)
 				}
 			);
-			console.log(`Impression ${impressionId} is ending.`);
-			alert("interruptiong");
 		},
 
 		setGuid: function() {
@@ -69,7 +68,6 @@ function setupStatsForager(setup) {
 		},
 	};
 
-	console.log(setup);
 	addEventListener("beforeunload", async () => { statsForager.leave(); });
 	statsForager.arrive(setup);
 };
