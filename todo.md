@@ -5,17 +5,22 @@
 and removes dependencies on unstrustworthy data hogs like Google.
 
 ### In Progress
-
-### Needs doing
 - dashboard site select
 - dashboard create site
-- add charts to dashboard (apexcharts?)
+
+### Needs doing
+- pages with top ten growth
+- site impression count over time
+- browsers visiting your site
+- page visits
+- locations
 - add user ip count to dashboard
-- add referrer count
+- top referrers and top referred destination
 - API connect to database from docker container
 - Write "Getting Started" (probably on landing page)
 
 ### Done
+- add charts to dashboard (apexcharts?)
 - registration & login rate limiting (tollbooth?)
 - csrf (nosurf)
 - logout and logout header

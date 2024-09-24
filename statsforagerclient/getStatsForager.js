@@ -27,7 +27,17 @@ function setupStatsForager(setup) {
 			);
 		},
 
-		leave: async function() {
+		leave: function() {
+			window.fetch(
+				`http://localhost:8000/api/sites/${setup.siteKey}/impressions/${impressionId}`,
+				{
+					method: 'PUT',
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body:'{"test":"test"}'
+				}
+			);
 			console.log(`Impression ${impressionId} is ending.`);
 			alert("interruptiong");
 		},
@@ -60,7 +70,7 @@ function setupStatsForager(setup) {
 	};
 
 	console.log(setup);
-	addEventListener("beforeunload", async () => { await statsForager.leave(); });
+	addEventListener("beforeunload", async () => { statsForager.leave(); });
 	statsForager.arrive(setup);
 };
 

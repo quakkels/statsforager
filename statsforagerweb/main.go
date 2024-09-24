@@ -18,7 +18,6 @@ import (
 	"github.com/didip/tollbooth/v7"
 	"github.com/didip/tollbooth/v7/limiter"
 	"github.com/joho/godotenv"
-	"github.com/justinas/nosurf"
 
 	"statsforagerweb/dataaccess"
 	"statsforagerweb/domain"
@@ -107,10 +106,11 @@ func main() {
 	limiter.SetMethods([]string{"POST"})
 	rlm := middleware.NewRateLimitingMiddleware(limiter)
 
+
 	middlewareStack := middleware.CreateStack(
 		middleware.Logging,
 		rlm.Apply,
-		nosurf.NewPure,
+		middleware.Csrf,
 		sessionManager.LoadAndSave,
 		ham.Apply,
 	)
