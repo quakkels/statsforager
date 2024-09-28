@@ -30,6 +30,7 @@ func postLoginHandler(accountsManager domain.AccountsManager, sessionManager *sc
 		}
 
 		otp, err := domain.NewOtpToken(model.Email, 10*time.Minute)
+		fmt.Println("login.go: postLoginHandler> otp.Otp:", otp.Otp)
 		if err != nil {
 			fmt.Println(err)
 			http.Error(w, err.Error(), 500)
@@ -48,16 +49,24 @@ func postLoginHandler(accountsManager domain.AccountsManager, sessionManager *sc
 	}
 }
 
-func getLoginConfirmHandler(
-	sessionManager *scs.SessionManager,
-) func(http.ResponseWriter, *http.Request) {
-	return func(
-		w http.ResponseWriter,
-		r *http.Request,
-	) {
+func getLoginConfirmHandler(sessionManager *scs.SessionManager) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		defer sessionManager.Remove(r.Context(), "LoginOtp")
 		suggestedOtp := r.PathValue("otp")
+		fmt.Println("login.go: getLoginConfirmHandler> suggestedOtp:", suggestedOtp)
+
+		var otp domain.OtpToken
+		if tempotp, ok := sessionManager.Get(r.Context(), "LoginOtp").(domain.OtpToken); !ok {
+			fmt.Println("login.go: getLoginConfirmHandler> sessiontManager: couldn't get 'LoginOtp' as domain.OtpToken")
+			http.Error(w, "Invalid session or OTP", http.StatusUnauthorized)
+			return
+		} else {
+			otp = tempotp
+		}
+		fmt.Println("login.go: getLoginConfirmHandler> otp:", otp.Otp)
+
 		loginOtp := sessionManager.Get(r.Context(), "LoginOtp").(domain.OtpToken)
+
 		if loginOtp.IsValid(suggestedOtp) {
 			sessionManager.RenewToken(r.Context()) // prevent session fixation
 			sessionManager.Put(r.Context(), "accountCode", loginOtp.AccountCode)
