@@ -31,10 +31,13 @@ func NewOtpToken(accountCode string, expiration time.Duration) (OtpToken, error)
 	}
 	otpToken.setHashAsHex()
 
+	fmt.Println("otpToken.go: NewOtpToken> otpToken.Otp:", otpToken.Otp)
 	return otpToken, nil
 }
 
 func (otpToken *OtpToken) IsValid(otpToTest string) bool {
+	fmt.Println("otpToken.go: IsValid> otpToTest:", otpToTest)
+	fmt.Println("otpToken.go: IsValid> otpToken.Otp:", otpToken.Otp)
 	nowUtc := time.Now().UTC()
 	hashToTest := otpToken.hashOtpAsHex(otpToTest)
 	if otpToken.Otp == otpToTest &&
