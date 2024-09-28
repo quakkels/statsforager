@@ -24,7 +24,7 @@ func (self *RateLimitingMiddleware) Apply(next http.Handler) http.Handler {
 			fmt.Println("Rate limited")
 			return
 		}
-		
+
 		next.ServeHTTP(w, r)
 	})
 }

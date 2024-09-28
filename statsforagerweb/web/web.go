@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"statsforagerweb/web/tplhelpers"
 
 	"github.com/justinas/nosurf"
 )
@@ -20,7 +21,16 @@ type errorResponse struct {
 	Message string `json:"message"`
 }
 
-var tplGlob = template.Must(template.ParseFS(tplFs, "templates/*.html"))
+var funcMap = template.FuncMap{
+	"select":  tplhelpers.Select,
+	"makeMap": tplhelpers.MakeMap,
+}
+
+var tplGlob = template.Must(
+	template.
+		New("base").
+		Funcs(funcMap).
+		ParseFS(tplFs, "templates/*.html"))
 
 func WriteJson(w http.ResponseWriter, status int, v any) error {
 	w.Header().Add("Content-Type", "application/json")
@@ -45,7 +55,7 @@ func optionsCorsHandler() func(http.ResponseWriter, *http.Request) {
 
 type modelWrapper struct {
 	AccountCode string
-	Token string
+	Token       string
 	Model       any
 }
 

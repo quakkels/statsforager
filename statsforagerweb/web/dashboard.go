@@ -27,10 +27,24 @@ func getDashboardHandler(
 		}
 
 		model := struct {
+			Parameters struct {
+				SiteKey       string
+				TimeUnitCount int
+				TimeUnit      string
+			}
 			Sites         []domain.Site
 			Impressions   []domain.Impression
 			LocationCount map[string]int
 		}{
+			Parameters: struct {
+				SiteKey       string
+				TimeUnitCount int
+				TimeUnit      string
+			}{
+				SiteKey:       "test",
+				TimeUnitCount: 10,
+				TimeUnit:      "day",
+			},
 			Sites:         sites,
 			Impressions:   impressions,
 			LocationCount: locationCount,

@@ -106,7 +106,6 @@ func main() {
 	limiter.SetMethods([]string{"POST"})
 	rlm := middleware.NewRateLimitingMiddleware(limiter)
 
-
 	middlewareStack := middleware.CreateStack(
 		middleware.Logging,
 		rlm.Apply,

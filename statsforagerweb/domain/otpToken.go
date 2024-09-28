@@ -40,9 +40,10 @@ func (otpToken *OtpToken) IsValid(otpToTest string) bool {
 	if otpToken.Otp == otpToTest &&
 		otpToken.ExpirationUtc.After(nowUtc) &&
 		otpToken.Thumbprint == hashToTest {
+		fmt.Println("\n=============\n===success===\noriginalHash:", otpToken.Thumbprint, "\nhashToTest:", hashToTest)
 		return true
 	}
-	fmt.Println("originalHash:", otpToken.Thumbprint, "\nhashToTest:", hashToTest)
+	fmt.Println("\n=============\n===failure===\noriginalHash:", otpToken.Thumbprint, "\nhashToTest:", hashToTest)
 	return false
 }
 

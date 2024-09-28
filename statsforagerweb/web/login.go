@@ -57,7 +57,9 @@ func getLoginConfirmHandler(
 	) {
 		defer sessionManager.Remove(r.Context(), "LoginOtp")
 		suggestedOtp := r.PathValue("otp")
+		fmt.Println(suggestedOtp)
 		loginOtp := sessionManager.Get(r.Context(), "LoginOtp").(domain.OtpToken)
+		fmt.Println(loginOtp)
 		if loginOtp.IsValid(suggestedOtp) {
 			sessionManager.RenewToken(r.Context()) // prevent session fixation
 			sessionManager.Put(r.Context(), "accountCode", loginOtp.AccountCode)
