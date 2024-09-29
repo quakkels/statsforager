@@ -32,22 +32,16 @@ func Select(selected string, options, attributes map[string]string) template.HTM
 }
 
 // {{ $mymap := makeMap "key1" "value1" "key2" "value2" }}
-func MakeMap(pairs ...interface{}) (map[string]interface{}, error) {
+func MakeMap(pairs ...string) (map[string]string, error) {
 	if len(pairs)%2 != 0 {
 		return nil, errors.New("pairs must be even in number")
 	}
-	m := make(map[string]interface{})
+	m := make(map[string]string)
 	for i := 0; i < len(pairs); i += 2 {
-		key, ok := pairs[i].(string)
-		if !ok {
-			return nil, errors.New("keys must be strings")
-		}
+		key := pairs[i]
 		m[key] = pairs[i+1]
 	}
 	return m, nil
-}
-
-func RegisterFuncMap() {
 }
 
 func makeAttributesHtml(attributes map[string]string) string {

@@ -33,28 +33,16 @@
 	<h2>Sites <a href="/site/add" hx-get="/site/add" hx-target="body" hx-push-url="true"></a></h2>
 	<form>
 		history of
-		{{- $selectAttr := makeMap "name" "SiteKey" -}}
-		{{- select .Model.Parameters.SiteKey nil $selectAttr -}}
-		<select name="SiteKey">
-			{{range .Model.Sites}}
-			<option value="{{ .SiteKey }}" {{ if eq .SiteKey $model.Parameters.SiteKey }} selected {{ end }}>{{ .Domain }}</option>
-			{{end}}
-		</select>
+		{{- $siteSelectAttr := makeMap "name" "SiteKey" -}}
+		{{- select .Model.Parameters.SiteKey .Model.SiteSelect $siteSelectAttr -}}
 		for the past
 		<input type="number" name="TimeUnitCount" value="{{ .Model.Parameters.TimeUnitCount }}">
-		<select name="TimeUnit">
-			<option value="day">days</option>
-			<option value="week">weeks</option>
-			<option value="month">month</option>
-		</select>
+		{{- $timeUnitSelectAttr := makeMap "name" "TimeUnit" -}}
+		{{- $timeUnitSelectOptions := makeMap "day" "days" "week" "weeks" "month" "months" -}}
+		{{- select .Model.Parameters.TimeUnit $timeUnitSelectOptions $timeUnitSelectAttr -}}
 		<button type="submit" class="secondary">Apply</button>
 	</form>
-	<table>
-		<tr>
-		<th>Domain</th>
-		</tr>
-		{{range .Model.Sites}}<tr><td>{{ .Domain }}</td></tr>{{else}}<tr><td>no rows</td></tr>{{end}}
-	</table>
+
 	<h2>Location Counts</h2>	
 	<table>
 		<tr>
