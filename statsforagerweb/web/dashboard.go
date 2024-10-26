@@ -12,6 +12,11 @@ func getDashboardHandler(
 	impressionsManager domain.ImpressionsManager) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 
+		accountCode, ok := GetAccountCode(r.Context())
+		if !ok {
+			http.Error(w, "Something broke that should never be broken. Sorry.", 500)
+		}
+
 		params := r.URL.Query()
 		currentSiteKey := params.Get("SiteKey")
 		timeUnitCount, err := strconv.Atoi(params.Get("TimeUnitCount"))
@@ -23,7 +28,7 @@ func getDashboardHandler(
 			timeUnit = "week"
 		}
 
-		sites, err := sitesManager.GetAllSites(r.Context())
+		sites, err := sitesManager.GetSites(r.Context(), accountCode)
 		if err != nil {
 			fmt.Println(err)
 		}

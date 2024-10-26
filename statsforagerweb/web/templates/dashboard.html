@@ -1,94 +1,106 @@
-{{ $model := .Model }}
-{{ template "_tophead.html" . }}
-<title>Dashboard</title>
-{{ template "_topbody.html" . }}
-<section class="gutter">
-	<!--
-	<div id="chart"></div>
-	<script>
-		/*
-		var options = {
-			chart: {
-				type: 'line'
-			},
-			series: [{
-				name: 'sales',
-				data: [
-					{{ range $key, $value := .Model.LocationCount }}{{$value}},{{end}}
-				]
-			}],
-			xaxis: {
-				categories: [
-					{{ range $key, $value := .Model.LocationCount }}{{$key}},{{end}}
-				]
-			}
-		}
+{{- $model := .Model -}}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{{ template "_tophead.html" . }}
+		<title>Dashboard</title>
+	</head>
+	<body>
+		{{ template "_topbody.html" . }}
+		<main>
+			<section class="gutter">
+			<!--
+<div id="chart"></div>
+<script>
+/*
+var options = {
+chart: {
+type: 'line'
+},
+series: [{
+name: 'sales',
+data: [
+{{ range $key, $value := .Model.LocationCount }}{{$value}},{{end}}
+]
+}],
+xaxis: {
+categories: [
+{{ range $key, $value := .Model.LocationCount }}{{$key}},{{end}}
+]
+}
+}
 
-		 var chart = new ApexCharts(document.querySelector("#chart"), options);
+var chart = new ApexCharts(document.querySelector("#chart"), options);
 
-		chart.render();
-		*/
-	</script>
-	-->
-	<h2>Sites <a href="/site/add" hx-get="/site/add" hx-target="body" hx-push-url="true"></a></h2>
-	<form>
-		history of
-		{{- $siteSelectAttr := makeMap "name" "SiteKey" -}}
-		{{- select .Model.Parameters.SiteKey .Model.SiteSelect $siteSelectAttr -}}
-		for the past
-		<input type="number" name="TimeUnitCount" value="{{ .Model.Parameters.TimeUnitCount }}">
-		{{- $timeUnitSelectAttr := makeMap "name" "TimeUnit" -}}
-		{{- $timeUnitSelectOptions := makeMap "day" "days" "week" "weeks" "month" "months" -}}
-		{{- select .Model.Parameters.TimeUnit $timeUnitSelectOptions $timeUnitSelectAttr -}}
-		<button type="submit" class="secondary">Apply</button>
-	</form>
+chart.render();
+*/
+</script>
+			-->
+			<div>
+				<a href="/app/manage" hx-get="/site/manage" hx-target="body" hx-push-url="true" class="button">🌐 Manage</a>
+			</div>
+		<h2>Sites</h2>
+			<form>
+				history of
+				{{- $siteSelectAttr := makeMap "name" "SiteKey" -}}
+				{{- select .Model.Parameters.SiteKey .Model.SiteSelect $siteSelectAttr -}}
+				for the past
+				<input type="number" name="TimeUnitCount" value="{{ .Model.Parameters.TimeUnitCount }}">
+				{{- $timeUnitSelectAttr := makeMap "name" "TimeUnit" -}}
+				{{- $timeUnitSelectOptions := makeMap "day" "days" "week" "weeks" "month" "months" -}}
+				{{- select .Model.Parameters.TimeUnit $timeUnitSelectOptions $timeUnitSelectAttr -}}
+				<button type="submit" class="secondary">Apply</button>
+			</form>
 
-	<h2>Location Counts</h2>	
-	<table>
-		<tr>
-			<th>Location</th>
-			<th>Count</th>
-		</tr>{{ range $key, $value := .Model.LocationCount }}
-		<tr>
-			<td>{{$key}}</td>
-			<td>{{$value}}</td>
-		</tr>{{else}}
-		<tr>
-			<td></td>
-			<td></td>
-		</tr>{{end}}
-	</table>
-	<h2>Impressions</h2>
-	<div class="table">
-	<table>
-		<tr>
-		<th>Impression ID</th>
-		<th>IP Address</th>
-		<th>User Agent</th>
-		<th>Language</th>
-		<th>Location</th>
-		<th>Referrer</th>
-		<th>Site Key</th>
-		<th>Created</th>
-		<th>Started</th>
-		<th>Completed</th>
-		</tr>{{range .Model.Impressions}}
-		<tr>
-			<td>{{ .ImpressionId }}</td>
-			<td>{{ .IpAddress }}</td>
-			<td>{{ .UserAgent }}</td>
-			<td>{{ .Language }}</td>
-			<td>{{ .Location }}</td>
-			<td>{{ .Referrer }}</td>
-			<td>{{ .SiteKey }}</td>
-			<td>{{ .CreatedUtc }}</td>
-			<td>{{ .StartedUtc }}</td>
-			<td>{{ .CompletedUtc }}</td>
-		</tr>{{else}}
-		<tr>
-			<td>no rows</td>
-		</tr>{{end}}
-	</table>
-	</div>
-</section>
-{{ template "_bottom.html" . }}
+		<h2>Location Counts</h2>	
+			<table>
+				<tr>
+					<th>Location</th>
+					<th>Count</th>
+				</tr>{{ range $key, $value := .Model.LocationCount }}
+				<tr>
+					<td>{{$key}}</td>
+					<td>{{$value}}</td>
+				</tr>{{else}}
+				<tr>
+				<td></td>
+				<td></td>
+				</tr>{{end}}
+			</table>
+		<h2>Impressions</h2>
+			<div class="table">
+				<table>
+					<tr>
+						<th>Impression ID</th>
+						<th>IP Address</th>
+						<th>User Agent</th>
+						<th>Language</th>
+						<th>Location</th>
+						<th>Referrer</th>
+						<th>Site Key</th>
+						<th>Created</th>
+						<th>Started</th>
+						<th>Completed</th>
+					</tr>{{range .Model.Impressions}}
+					<tr>
+						<td>{{ .ImpressionId }}</td>
+						<td>{{ .IpAddress }}</td>
+						<td>{{ .UserAgent }}</td>
+						<td>{{ .Language }}</td>
+						<td>{{ .Location }}</td>
+						<td>{{ .Referrer }}</td>
+						<td>{{ .SiteKey }}</td>
+						<td>{{ .CreatedUtc }}</td>
+						<td>{{ .StartedUtc }}</td>
+						<td>{{ .CompletedUtc }}</td>
+					</tr>{{else}}
+					<tr>
+						<td>no rows</td>
+					</tr>{{end}}
+				</table>
+			</div>
+		</section>
+		</main>
+		{{ template "_bottom.html" . }}
+	</body>
+</html>

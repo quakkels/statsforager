@@ -1,45 +1,54 @@
-{{ template "_tophead.html" . }}
-<title>StatsForager.com - Register</title>
-{{ template "_topbody.html" . }}
-<section class="region row">
-	<div id="form" class="center-self card" style="min-width: 372px;">
-		{{ if .Model.IsPostSuccess }}
-		<div class="frame">
-			<h1>Thank you for registering</h1>
-			<p>
-				Please <a href="/login">to continue to your account</a>.
-			</p>
-		</div>
-		{{ else }}
-		<form 
-			method="post" 
-			action="/register"
-			hx-post="/register"
-			hx-target="body">
-			{{ .CsrfInputElement }}
-			<input type="hidden" name="csrf_token" value="{{ .Token }}">
-			<div class="frame">
-				<h1>We need your email to get started</h1>
-				<p>
-					<input autofocus placeholder="Email" type="email" id="email" name="email" style="width:100%" value="{{ .Model.Email }}">
-				</p>
-				<p>
-					<button type="submit">Sign Up</button>
-				</p>
-				{{ if .Model.Errors }}
-				<ul class="error">
-					{{ range .Model.Errors }}
-					<li>{{ . }}</li>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{{ template "_tophead.html" . }}
+		<title>StatsForager.com - Register</title>
+	</head>
+	<body>
+		{{ template "_topbody.html" . }}
+		<main>
+			<section class="region row">
+				<div id="form" class="center-self card" style="min-width: 372px;">
+					{{ if .Model.IsPostSuccess }}
+					<div class="frame">
+					<h1>Thank you for registering</h1>
+						<p>
+							Please <a href="/login">to continue to your account</a>.
+						</p>
+					</div>
+					{{ else }}
+					<form 
+						method="post" 
+						action="/register"
+						hx-post="/register"
+						hx-target="body">
+						{{ .CsrfInputElement }}
+						<input type="hidden" name="csrf_token" value="{{ .Token }}">
+						<div class="frame">
+							<h1>We need your email to get started</h1>
+							<p>
+								<input autofocus placeholder="Email" type="email" id="email" name="email" style="width:100%" value="{{ .Model.Email }}">
+							</p>
+							<p>
+								<button type="submit">Sign Up</button>
+							</p>
+							{{ if .Model.Errors }}
+							<ul class="error">
+								{{ range .Model.Errors }}
+								<li>{{ . }}</li>
+								{{ end }}
+							</ul>
+							{{ end }}
+							<p>
+								We will never sell your email address information.
+								After registering, check your inbox for a magic link to access your StatsForager dashboard.
+							</p>
+						</div>
+					</form>
 					{{ end }}
-				</ul>
-				{{ end }}
-				<p>
-					We will never sell your email address information.
-					After registering, check your inbox for a magic link to access your StatsForager dashboard.
-				</p>
-			</div>
-		</form>
-		{{ end }}
-	</div>
-</section>
-{{ template "_bottom.html" . }}
+				</div>
+			</section>
+		</main>
+		{{ template "_bottom.html" . }}
+	</body>
+</html>

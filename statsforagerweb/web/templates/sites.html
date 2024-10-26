@@ -1,0 +1,43 @@
+{{- $model := .Model -}}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{{- template "_tophead.html" . -}}
+		<title>Dashboard</title>
+	</head>
+	<body>
+		{{- template "_topbody.html" . -}}
+		<main>
+			<section class="gutter">
+				<form>
+					<input type="hidden" name="SiteKey" value="{{ $model.Form.SiteName }}">
+					<div class="grid-container with-three-columns">
+						<p>
+							<label>Site Name</label>
+							<input type="text" name="SiteName" value="{{ $model.Form.SiteName }}">
+						</p>
+						<p>
+							<label>Site Domain</label>
+							<input type="text" name="Domain" value="{{ $model.Form.Domain }}">
+						</p>
+						<p>
+							<button type="submit">Save</button>
+						</p>
+					</div>
+				</form>
+				{{- if $model.Sites -}}
+				<table>
+					{{- range $model.Sites -}}
+					<tr>
+						<td>{{ .OwnerAccount }}</td>
+						<td>{{ .SiteName }}</td>
+						<td>{{ .Domain }}</td>
+					</tr>
+					{{- end -}}
+				</table>
+				{{- end -}}
+			</section>
+		</main>
+		{{- template "_bottom.html" . -}}
+	</body>
+</html>

@@ -1,6 +1,7 @@
 package web
 
 import (
+	"context"
 	"embed"
 	"encoding/json"
 	"fmt"
@@ -71,8 +72,7 @@ func render(w http.ResponseWriter, request *http.Request, templateName string, m
 	}
 
 	context := request.Context()
-
-	accountCode, ok := context.Value("accountCode").(string)
+	accountCode, ok := GetAccountCode(context)
 	if ok {
 		modelWrapper.AccountCode = accountCode
 	}
@@ -81,4 +81,9 @@ func render(w http.ResponseWriter, request *http.Request, templateName string, m
 		fmt.Println(err)
 		http.Error(w, err.Error(), 500)
 	}
+}
+
+func GetAccountCode(context context.Context) (string, bool) {
+	accountCode, ok := context.Value("accountCode").(string)
+	return accountCode, ok
 }

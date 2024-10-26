@@ -24,7 +24,6 @@ func (impRepo *ImpressionsRepo) SaveImpression(
 	impression domain.Impression) error {
 
 	const sql = `
-	
 	MERGE INTO impressions target
 	USING (SELECT 
 		@impressionId::uuid AS impression_id,

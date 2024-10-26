@@ -68,7 +68,7 @@ func getLoginConfirmHandler(sessionManager *scs.SessionManager) func(http.Respon
 		if loginOtp.IsValid(suggestedOtp) {
 			sessionManager.RenewToken(r.Context()) // prevent session fixation
 			sessionManager.Put(r.Context(), "accountCode", loginOtp.AccountCode)
-			http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+			http.Redirect(w, r, "/app/dashboard", http.StatusSeeOther)
 		}
 		model := loginModel{
 			IsPostSuccess: false,
