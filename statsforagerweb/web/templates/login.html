@@ -33,7 +33,7 @@
 							</p>
 							<p>
 								<button type="submit">Log In</button>
-								<a class="button transparent" href="/register" hx-get="/register" hx-target="body">...or, sign up.</a>
+								<a class="button transparent" href="/register" hx-get="/register" hx-target="body" hx-push-url="true">...or, sign up.</a>
 							</p>
 							{{ if .Model.Errors }}
 							<ul class="error">
