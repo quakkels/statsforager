@@ -1,0 +1,19 @@
+# Cypress
+cypress/screenshots/
+cypress/videos/
+cypress/results/
+cypress/fixtures/example.json
+*.mp4
+
+# Node
+node_modules/
+npm-debug.log
+package-lock.json
+
+# IDE and OS Files
+.DS_Store
+.vscode/
+.idea/
+
+# Other
+.env
