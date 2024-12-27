@@ -10,6 +10,7 @@
 - browsers visiting your site
 - location visits
 - top referrers and top referred destination
+- persist session across app restarts
 - API connect to database from docker container
 - marketing: "Traffic Analysis" copy for landing page
 - marketing: blog section of statsforager
