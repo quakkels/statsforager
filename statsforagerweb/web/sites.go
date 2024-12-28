@@ -8,6 +8,7 @@ import (
 
 func getAppHandler(sitesManager domain.SitesManager) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// override for development
 		currentAccountKey := "me@example.com"
 
 		sites, err := sitesManager.GetSites(r.Context(), currentAccountKey)
@@ -18,7 +19,7 @@ func getAppHandler(sitesManager domain.SitesManager) func(http.ResponseWriter, *
 		}
 
 		model := struct {
-			Form domain.Site
+			Form  domain.Site
 			Sites []domain.Site
 		}{
 			Sites: sites,

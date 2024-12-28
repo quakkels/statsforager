@@ -73,7 +73,7 @@ func (repo *SitesRepo) SaveSite(context context.Context, site domain.Site) error
 			"siteKey":      site.SiteKey,
 			"domain":       site.Domain,
 			"ownerAccount": site.OwnerAccount,
-			"siteName": site.SiteName})
+			"siteName":     site.SiteName})
 
 	if err != nil {
 		var pgErr *pgconn.PgError
