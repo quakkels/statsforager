@@ -68,12 +68,13 @@ func main() {
 	}
 	mail, err := domain.NewMail(
 		domain.SmtpConfig{
-			User:     os.Getenv("smtp_user"),
-			From:     os.Getenv("smtp_from"),
-			Password: os.Getenv("smtp_password"),
-			Host:     os.Getenv("smtp_host"),
-			Port:     os.Getenv("smtp_port"),
-			IsLive:   smtpIsLive,
+			User:           os.Getenv("smtp_user"),
+			From:           os.Getenv("smtp_from"),
+			Password:       os.Getenv("smtp_password"),
+			Host:           os.Getenv("smtp_host"),
+			Port:           os.Getenv("smtp_port"),
+			EmailDirectory: os.Getenv("smtp_email_directory"),
+			IsLive:         smtpIsLive,
 		},
 	)
 	if err != nil {

@@ -5,12 +5,14 @@ import (
 	"errors"
 	"fmt"
 	"net/smtp"
+	"os"
+	"path/filepath"
 	"time"
 )
 
 type SmtpConfig struct {
-	From, User, Host, Port, Password string
-	IsLive                           bool
+	From, User, Host, Port, Password, EmailDirectory string
+	IsLive                                           bool
 }
 
 type Mail struct {
@@ -40,6 +42,10 @@ func NewMail(config SmtpConfig) (Mail, error) {
 		return mail, errors.New("Need SmtpConfig with value for Port.")
 	}
 
+	if !config.IsLive && config.EmailDirectory == "" {
+		return mail, errors.New("Need SmtpConfig with value for EmailDirectory when not live.")
+	}
+
 	return Mail{config: config}, nil
 }
 
@@ -53,6 +59,18 @@ func (mail *Mail) SendMailWithTls(to, subject, body string) {
 
 	if !mail.config.IsLive {
 		fmt.Println(string(message))
+
+		file, err := os.Create(filepath.Join(mail.config.EmailDirectory, to+".txt"))
+		defer file.Close()
+		if err != nil {
+			fmt.Println("SendMailWithTls error:", err)
+		}
+
+		_, err = file.WriteString(body)
+		if err != nil {
+			fmt.Println("SendMailWithTls error:", err)
+		}
+
 		return
 	}
 
