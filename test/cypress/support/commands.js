@@ -23,3 +23,20 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('login', email => {
+	cy.visit('/login')
+	cy.get('input[name="email"]').type(email)
+	cy.get('button[type="submit"]').click()
+	cy.get('h1').contains('Check email')
+	cy.wait(5000)
+	cy.readFile('cypress/fixtures/' + email + '.txt').then((content) => {
+		const urlRegex = /(https?:\/\/[^\s]+)/;
+		const match = content.match(urlRegex);
+		const url = match ? match[0] : null;
+		cy.visit(url)
+			.url()
+			.should("include","app/dashboard")
+	});
+	cy.wait(5000)
+})
