@@ -1,0 +1,9 @@
+{{ if . }}
+<div class="error">
+	<ul>
+		{{ range . }}
+	<li>{{ . }}</li>
+		{{ end }}
+	</ul>
+</div>
+{{ end }}

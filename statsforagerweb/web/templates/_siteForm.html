@@ -1,0 +1,13 @@
+<form 
+	hx-target-error="#siteValidation"
+	hx-post="/app/manage/site/save"
+	hx-trigger="submit"
+	hx-target="#siteTable tbody"
+	hx-swap="afterbegin"
+	hx-on:htmx:before-request="document.getElementById('siteValidation').innerHTML = '';"
+>
+	<input type="text" name="siteName" placeholder="Site Name">
+	<input type="text" name="siteDomain" placeholder="Site Domain">
+	<button type="submit">Submit</button>
+</form>
+<div id="siteValidation"></div>

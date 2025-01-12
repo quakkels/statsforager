@@ -31,18 +31,32 @@ func getAppHandler(sitesManager domain.SitesManager) func(http.ResponseWriter, *
 
 func postAppManageSiteSave(sitesManager domain.SitesManager) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		// get form data
+		r.ParseForm()
+
 		model := domain.Site {
 			OwnerAccount: "me@example.com",
-			SiteKey: "domain",
-			SiteName: "domain name",
+			Domain: r.Form.Get("siteDomain"),
+			SiteName: r.Form.Get("siteName"),
+			SiteKey: "this is a thing",
 		}
-			
-		renderRaw(w, "_siteRow.html", model)
-		// thing
-		// get form data
+
 		// validate form data
+		validationErrors := []string{}
+		if model.Domain == "" {
+			validationErrors= append(validationErrors, "Missing domain")
+		}
+
+		if len(validationErrors) > 0 {
+			renderRawBadRequest(w, "_errors.html", validationErrors)
+			return
+		}
+
 		// save site
+		// todo save
+
 		// return site html
+		renderRaw(w, "_siteRow.html", model)
 	}
 }
 

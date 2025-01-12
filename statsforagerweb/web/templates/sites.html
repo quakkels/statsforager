@@ -7,19 +7,15 @@
 	</head>
 	<body>
 		{{- template "_topbody.html" . -}}
-		<main>
+		<main hx-ext="response-targets">
 			<section class="gutter">
-
-				<form hx-post="/app/manage/site/save" hx-trigger="submit" hx-target="#siteTable" hx-swap="beforeend">
-					<input type="text" name="siteName" placeholder="Site Name" required>
-					<input type="text" name="siteDomain" placeholder="Site Domain" required>
-					<button type="submit">Submit</button>
-				</form>
-
+				{{- template "_siteForm.html" -}}
 				<table id="siteTable">
+					<tbody>
 					{{- range $model.Sites -}}
 					{{- template "_siteRow.html" . -}}
 					{{- end -}}
+					</tbody>
 				</table>
 			</section>
 		</main>

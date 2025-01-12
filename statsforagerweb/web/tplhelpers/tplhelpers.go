@@ -31,6 +31,7 @@ func Select(selected string, options, attributes map[string]string) template.HTM
 	)
 }
 
+// Especially useful for select options templates
 // {{ $mymap := makeMap "key1" "value1" "key2" "value2" }}
 func MakeMap(pairs ...string) (map[string]string, error) {
 	if len(pairs)%2 != 0 {

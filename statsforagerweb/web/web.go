@@ -90,6 +90,11 @@ func renderRaw(w http.ResponseWriter, templateName string, model any) {
 	}
 }
 
+func renderRawBadRequest(w http.ResponseWriter, templateName string, model any) {
+	w.WriteHeader(http.StatusBadRequest)
+	renderRaw(w, templateName, model)
+}
+
 func GetAccountCode(context context.Context) (string, bool) {
 	accountCode, ok := context.Value("accountCode").(string)
 	return accountCode, ok
