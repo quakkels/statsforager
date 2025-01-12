@@ -98,7 +98,7 @@ func main() {
 	sessionManager := scs.New()
 	sessionManager.Lifetime = 24 * time.Hour
 	sessionManager.Cookie.HttpOnly = true
-	sessionManager.Cookie.SameSite = http.SameSiteStrictMode
+	sessionManager.Cookie.SameSite = http.SameSiteLaxMode
 	sessionManager.Cookie.Secure = strings.HasPrefix(os.Getenv("app_root"), "https://")
 
 	ham := middleware.NewHydrateAccountMiddleware(sessionManager)
@@ -110,7 +110,7 @@ func main() {
 	middlewareStack := middleware.CreateStack(
 		middleware.Logging,
 		rlm.Apply,
-		middleware.Csrf,
+		// middleware.Csrf, // not using a CSRF because secured cookies also address the cross site request forgery problem
 		sessionManager.LoadAndSave,
 		ham.Apply,
 	)

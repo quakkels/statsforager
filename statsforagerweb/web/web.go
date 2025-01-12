@@ -83,6 +83,13 @@ func render(w http.ResponseWriter, request *http.Request, templateName string, m
 	}
 }
 
+func renderRaw(w http.ResponseWriter, templateName string, model any) {
+	if err := tplGlob.ExecuteTemplate(w, templateName, model); err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), 500)
+	}
+}
+
 func GetAccountCode(context context.Context) (string, bool) {
 	accountCode, ok := context.Value("accountCode").(string)
 	return accountCode, ok

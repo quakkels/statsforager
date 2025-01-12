@@ -9,33 +9,18 @@
 		{{- template "_topbody.html" . -}}
 		<main>
 			<section class="gutter">
-				<form>
-					<input type="hidden" name="SiteKey" value="{{ $model.Form.SiteName }}">
-					<div class="grid-container with-three-columns">
-						<p>
-							<label>Site Name</label>
-							<input type="text" name="SiteName" value="{{ $model.Form.SiteName }}">
-						</p>
-						<p>
-							<label>Site Domain</label>
-							<input type="text" name="Domain" value="{{ $model.Form.Domain }}">
-						</p>
-						<p>
-							<button type="submit">Save</button>
-						</p>
-					</div>
+
+				<form hx-post="/app/manage/site/save" hx-trigger="submit" hx-target="#siteTable" hx-swap="beforeend">
+					<input type="text" name="siteName" placeholder="Site Name" required>
+					<input type="text" name="siteDomain" placeholder="Site Domain" required>
+					<button type="submit">Submit</button>
 				</form>
-				{{- if $model.Sites -}}
-				<table>
+
+				<table id="siteTable">
 					{{- range $model.Sites -}}
-					<tr>
-						<td>{{ .OwnerAccount }}</td>
-						<td>{{ .SiteName }}</td>
-						<td>{{ .Domain }}</td>
-					</tr>
+					{{- template "_siteRow.html" . -}}
 					{{- end -}}
 				</table>
-				{{- end -}}
 			</section>
 		</main>
 		{{- template "_bottom.html" . -}}

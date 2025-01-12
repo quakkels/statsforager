@@ -29,6 +29,23 @@ func getAppHandler(sitesManager domain.SitesManager) func(http.ResponseWriter, *
 	}
 }
 
+func postAppManageSiteSave(sitesManager domain.SitesManager) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		model := domain.Site {
+			OwnerAccount: "me@example.com",
+			SiteKey: "domain",
+			SiteName: "domain name",
+		}
+			
+		renderRaw(w, "_siteRow.html", model)
+		// thing
+		// get form data
+		// validate form data
+		// save site
+		// return site html
+	}
+}
+
 /*
 func getSiteSaveHandler(sitesManager domain.SitesManager) func(http.ResponseWriter, *http.Request) {
 return func(w http.ResponseWriter, r *http.Request) {
