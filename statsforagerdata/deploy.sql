@@ -10,5 +10,6 @@ BEGIN;
 \i scripts/0004_impressions_site_fk.sql
 \i scripts/0005_impressions_change_leaving.sql
 \i scripts/0006_accounts_isactive_default.sql
+\i scripts/0007_sites_unique_domain.sql
 COMMIT;
 
